@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harblx API Docs</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Inter,Arial;
+background:#0f172a;
+color:white;
+display:flex;
+}
+
+/* Sidebar */
+
+.sidebar{
+width:240px;
+background:#020617;
+height:100vh;
+padding:20px;
+position:fixed;
+}
+
+.sidebar h2{
+margin-top:0;
+}
+
+.sidebar a{
+display:block;
+color:#94a3b8;
+text-decoration:none;
+margin:10px 0;
+}
+
+.sidebar a:hover{
+color:white;
+}
+
+/* Content */
+
+.content{
+margin-left:260px;
+padding:30px;
+max-width:900px;
+}
+
+.card{
+background:#1e293b;
+padding:25px;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+.endpoint{
+display:flex;
+gap:10px;
+align-items:center;
+background:#020617;
+padding:10px;
+border-radius:6px;
+}
+
+.method{
+background:#059669;
+padding:4px 10px;
+border-radius:5px;
+font-weight:bold;
+}
+
+.path{
+color:#38bdf8;
+}
+
+.param{
+background:#020617;
+padding:10px;
+border-radius:6px;
+margin-top:10px;
+}
+
+code{
+display:block;
+background:#020617;
+padding:15px;
+border-radius:8px;
+margin-top:10px;
+color:#38bdf8;
+word-break:break-all;
+}
+
+button{
+margin-top:10px;
+padding:8px 15px;
+border:none;
+border-radius:6px;
+background:#3b82f6;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#2563eb;
+}
+
+input{
+width:100%;
+padding:10px;
+border-radius:6px;
+border:none;
+margin-top:10px;
+background:#020617;
+color:white;
+}
+
+.response{
+background:#020617;
+padding:15px;
+border-radius:8px;
+margin-top:10px;
+}
+
+footer{
+text-align:center;
+margin-top:40px;
+color:#64748b;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>Harblx API</h2>
+
+<a href="#endpoint">Endpoint</a>
+<a href="#params">Parameters</a>
+<a href="#request">Example Request</a>
+<a href="#test">Test API</a>
+<a href="#auth">Authentication</a>
+
+</div>
+
+<div class="content">
+
+<div class="card" id="endpoint">
+
+<h2>Endpoint</h2>
+
+<div class="endpoint">
+<span class="method">GET</span>
+<span class="path">/v1/bypass</span>
+</div>
+
+</div>
+
+<div class="card" id="params">
+
+<h2>Parameters</h2>
+
+<div class="param">
+<b>url</b> — Link cần bypass
+</div>
+
+<div class="param">
+<b>api-key</b> — API key của bạn
+</div>
+
+</div>
+
+<div class="card" id="request">
+
+<h2>Example Request</h2>
+
+<code id="req">
+https://api.harblx.online/v1/bypass?url=https://linkvertise.com/&api-key=YOUR_KEY
+</code>
+
+<button onclick="copyReq()">Copy</button>
+
+</div>
+
+<div class="card" id="test">
+
+<h2>Test API</h2>
+
+<input id="link" placeholder="Paste link cần bypass">
+
+<button onclick="test()">Test API</button>
+
+<div class="response" id="res">
+Response sẽ hiện ở đây...
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Example Response</h2>
+
+<code>
+{
+ "status":"success",
+ "result":"https://real-link.com"
+}
+</code>
+
+</div>
+
+<div class="card" id="auth">
+
+<h2>Authentication</h2>
+
+<p>All API requests require an API key.</p>
+
+<code>
+api-key=YOUR_API_KEY
+</code>
+
+</div>
+
+<footer>
+
+Harblx API © 2026
+
+</footer>
+
+</div>
+
+<script>
+
+function copyReq(){
+
+let text=document.getElementById("req").innerText;
+
+navigator.clipboard.writeText(text);
+
+alert("Copied");
+
+}
+
+async function test(){
+
+let link=document.getElementById("link").value;
+
+if(!link){
+alert("Paste link first");
+return;
+}
+
+let url=`https://api.harblx.online/v1/bypass?url=${encodeURIComponent(link)}`;
+
+let r=await fetch(url);
+
+let data=await r.text();
+
+document.getElementById("res").innerText=data;
+
+}
+
+</script>
+
+</body>
+</html>
