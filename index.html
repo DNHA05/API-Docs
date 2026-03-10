@@ -27,7 +27,7 @@ overflow-x:hidden;
 
 }
 
-/* background animation */
+/* animated background */
 
 body::before{
 
@@ -37,17 +37,15 @@ top:-50%;
 left:-50%;
 width:200%;
 height:200%;
-background:radial-gradient(circle,#2563eb20,#020617 60%);
-animation:move 10s linear infinite;
+background:radial-gradient(circle,#2563eb30,#020617 60%);
+animation:spin 15s linear infinite;
 z-index:-1;
 
 }
 
-@keyframes move{
-
-0%{transform:rotate(0deg)}
+@keyframes spin{
+0%{transform:rotate(0)}
 100%{transform:rotate(360deg)}
-
 }
 
 /* sidebar */
@@ -67,38 +65,53 @@ position:fixed;
 
 font-size:22px;
 font-weight:700;
-margin-bottom:30px;
+margin-bottom:25px;
 
 }
 
-.sidebar a{
+/* search */
+
+.search{
+
+width:100%;
+padding:10px;
+background:#020617;
+border:1px solid #0f172a;
+border-radius:8px;
+color:white;
+margin-bottom:20px;
+
+}
+
+/* menu */
+
+.menu a{
 
 display:block;
 padding:10px;
 border-radius:8px;
+margin-bottom:5px;
 color:#94a3b8;
-text-decoration:none;
-margin-bottom:6px;
 cursor:pointer;
-transition:.2s;
+text-decoration:none;
 
 }
 
-.sidebar a:hover{
+.menu a:hover{
 
 background:#0f172a;
 color:white;
 
 }
 
-.sidebar a.active{
+.menu a.active{
 
 background:#2563eb;
 color:white;
 
 }
 
-/* menu button mobile */
+/* mobile menu */
 
 .menu-btn{
 
@@ -106,12 +119,12 @@ display:none;
 position:fixed;
 top:15px;
 left:15px;
-font-size:20px;
-padding:8px 12px;
 background:#2563eb;
 border:none;
+padding:8px 12px;
 border-radius:8px;
 color:white;
+font-size:20px;
 cursor:pointer;
 z-index:999;
 
@@ -124,7 +137,7 @@ z-index:999;
 margin-left:280px;
 padding:40px;
 width:100%;
-max-width:950px;
+max-width:1000px;
 
 }
 
@@ -147,76 +160,72 @@ margin-bottom:25px;
 display:flex;
 align-items:center;
 gap:10px;
-padding:10px;
-border:1px solid #0f172a;
-border-radius:8px;
+margin-top:10px;
 
 }
 
 .method{
 
-background:#059669;
+background:#16a34a;
 padding:4px 10px;
 border-radius:6px;
 font-size:14px;
 
 }
 
-.path{
+.url{
 
-color:#38bdf8;
-
-}
-
-/* param */
-
-.param{
-
-border:1px solid #0f172a;
-padding:10px;
-border-radius:8px;
-margin-top:10px;
-
-}
-
-/* code */
-
-code{
-
-display:block;
-background:#020617;
-border:1px solid #0f172a;
-padding:15px;
-border-radius:8px;
-margin-top:10px;
 color:#38bdf8;
 word-break:break-all;
 
 }
 
-/* inputs */
+/* table */
+
+table{
+
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+
+}
+
+td,th{
+
+border:1px solid #0f172a;
+padding:10px;
+
+}
+
+th{
+
+background:#020617;
+
+}
+
+/* input */
 
 input{
 
 width:100%;
-padding:12px;
-margin-top:10px;
+padding:10px;
 border-radius:8px;
 border:1px solid #0f172a;
 background:#020617;
 color:white;
+margin-top:10px;
 
 }
 
-/* buttons */
+/* button */
 
 button{
 
 margin-top:10px;
 padding:10px 18px;
+background:#2563eb;
 border:none;
 border-radius:8px;
-background:#2563eb;
 color:white;
 cursor:pointer;
 font-weight:600;
@@ -234,15 +243,29 @@ background:#1d4ed8;
 .response{
 
 margin-top:15px;
-border:1px solid #0f172a;
 background:#020617;
+border:1px solid #0f172a;
 padding:15px;
 border-radius:8px;
 white-space:pre-wrap;
 
 }
 
-/* section */
+/* code */
+
+code{
+
+display:block;
+background:#020617;
+border:1px solid #0f172a;
+padding:15px;
+border-radius:8px;
+margin-top:10px;
+color:#38bdf8;
+
+}
+
+/* sections */
 
 .section{
 
@@ -253,15 +276,6 @@ display:none;
 .section.active{
 
 display:block;
-
-}
-
-/* counter */
-
-.counter{
-
-margin-top:10px;
-color:#38bdf8;
 
 }
 
@@ -307,19 +321,25 @@ padding:25px;
 
 <div class="logo">Harblx API</div>
 
-<a class="active" onclick="showSection(event,'endpoint')">Endpoint</a>
-<a onclick="showSection(event,'params')">Parameters</a>
-<a onclick="showSection(event,'request')">Example Request</a>
-<a onclick="showSection(event,'test')">Test API</a>
-<a onclick="showSection(event,'auth')">Authentication</a>
+<input class="search" placeholder="Search endpoint...">
+
+<div class="menu">
+
+<a class="active" onclick="showSection(event,'bypass')">/v1/bypass</a>
+
+</div>
 
 </div>
 
 <div class="content">
 
-<!-- endpoint -->
+<!-- bypass -->
 
-<div id="endpoint" class="section active">
+<div id="bypass" class="section active">
+
+<h1>Bypass Endpoint</h1>
+
+<p>Bypass linkvertise and other shortlinks.</p>
 
 <div class="card">
 
@@ -328,43 +348,50 @@ padding:25px;
 <div class="endpoint">
 
 <span class="method">GET</span>
-<span class="path">/v1/bypass</span>
+
+<span class="url">
+
+https://api.harblx.online/v1/bypass
+
+</span>
 
 </div>
 
-<p class="counter">Requests today: <span id="count">0</span></p>
-
 </div>
-
-</div>
-
-<!-- params -->
-
-<div id="params" class="section">
 
 <div class="card">
 
 <h2>Parameters</h2>
 
-<div class="param">
+<table>
 
-<b>url</b> — Link cần bypass
+<tr>
+
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+
+</tr>
+
+<tr>
+
+<td>url</td>
+<td>string</td>
+<td>Link cần bypass</td>
+
+</tr>
+
+<tr>
+
+<td>api-key</td>
+<td>string</td>
+<td>Your API key</td>
+
+</tr>
+
+</table>
 
 </div>
-
-<div class="param">
-
-<b>api-key</b> — API key của bạn
-
-</div>
-
-</div>
-
-</div>
-
-<!-- request -->
-
-<div id="request" class="section">
 
 <div class="card">
 
@@ -376,49 +403,38 @@ https://api.harblx.online/v1/bypass?url=https://linkvertise.com/&api-key=YOUR_KE
 
 </code>
 
-<button onclick="copyReq()">Copy Request</button>
+<button onclick="copyReq()">Copy</button>
 
 </div>
-
-</div>
-
-<!-- test -->
-
-<div id="test" class="section">
 
 <div class="card">
 
 <h2>Test API</h2>
 
-<input id="urlInput" placeholder="Paste URL cần bypass">
+<input id="url" placeholder="Enter URL">
 
-<input id="keyInput" placeholder="Nhập API key">
+<input id="key" placeholder="API Key">
 
-<button onclick="testAPI()">Test API</button>
+<button onclick="test()">Send Request</button>
 
 <div class="response" id="res">
 
-Response sẽ hiện ở đây...
+Response will appear here...
 
 </div>
 
 </div>
-
-</div>
-
-<!-- auth -->
-
-<div id="auth" class="section">
 
 <div class="card">
 
-<h2>Authentication</h2>
-
-<p>All requests require an API key.</p>
+<h2>Example Response</h2>
 
 <code>
 
-api-key=YOUR_API_KEY
+{
+ "status":"success",
+ "result":"https://real-link.com"
+}
 
 </code>
 
@@ -439,11 +455,15 @@ document.querySelector(".sidebar").classList.toggle("active")
 function showSection(e,id){
 
 document.querySelectorAll(".section").forEach(s=>{
+
 s.classList.remove("active")
+
 })
 
-document.querySelectorAll(".sidebar a").forEach(a=>{
+document.querySelectorAll(".menu a").forEach(a=>{
+
 a.classList.remove("active")
+
 })
 
 document.getElementById(id).classList.add("active")
@@ -451,8 +471,6 @@ document.getElementById(id).classList.add("active")
 e.target.classList.add("active")
 
 }
-
-/* copy */
 
 function copyReq(){
 
@@ -464,31 +482,10 @@ alert("Copied!")
 
 }
 
-/* fake counter */
+async function test(){
 
-let count=0
-
-setInterval(()=>{
-
-count+=Math.floor(Math.random()*3)
-
-document.getElementById("count").innerText=count
-
-},2000)
-
-/* test api */
-
-async function testAPI(){
-
-let url=document.getElementById("urlInput").value
-let key=document.getElementById("keyInput").value
-
-if(!url){
-
-alert("Paste URL first")
-return
-
-}
+let url=document.getElementById("url").value
+let key=document.getElementById("key").value
 
 let api=`https://api.harblx.online/v1/bypass?url=${encodeURIComponent(url)}&api-key=${key}`
 
