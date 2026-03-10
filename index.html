@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Harblx API Docs</title>
 
@@ -14,114 +14,175 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
+font-family:Inter,system-ui;
 }
 
 body{
-font-family:Inter,Arial;
+
 background:#020617;
 color:white;
 display:flex;
+min-height:100vh;
+overflow-x:hidden;
+
 }
 
-/* menu button mobile */
+/* background animation */
 
-.menu-btn{
-display:none;
+body::before{
+
+content:"";
 position:fixed;
-top:15px;
-left:15px;
-background:#2563eb;
-border:none;
-color:white;
-font-size:22px;
-padding:8px 12px;
-border-radius:8px;
-z-index:999;
-cursor:pointer;
+top:-50%;
+left:-50%;
+width:200%;
+height:200%;
+background:radial-gradient(circle,#2563eb20,#020617 60%);
+animation:move 10s linear infinite;
+z-index:-1;
+
+}
+
+@keyframes move{
+
+0%{transform:rotate(0deg)}
+100%{transform:rotate(360deg)}
+
 }
 
 /* sidebar */
 
 .sidebar{
-width:250px;
+
+width:260px;
 background:#020617;
 border-right:1px solid #0f172a;
 height:100vh;
 padding:25px;
 position:fixed;
+
 }
 
 .logo{
+
 font-size:22px;
-font-weight:bold;
+font-weight:700;
 margin-bottom:30px;
+
 }
 
 .sidebar a{
+
 display:block;
+padding:10px;
+border-radius:8px;
 color:#94a3b8;
 text-decoration:none;
-margin:14px 0;
+margin-bottom:6px;
 cursor:pointer;
+transition:.2s;
+
 }
 
 .sidebar a:hover{
+
+background:#0f172a;
 color:white;
+
+}
+
+.sidebar a.active{
+
+background:#2563eb;
+color:white;
+
+}
+
+/* menu button mobile */
+
+.menu-btn{
+
+display:none;
+position:fixed;
+top:15px;
+left:15px;
+font-size:20px;
+padding:8px 12px;
+background:#2563eb;
+border:none;
+border-radius:8px;
+color:white;
+cursor:pointer;
+z-index:999;
+
 }
 
 /* content */
 
 .content{
-margin-left:270px;
+
+margin-left:280px;
 padding:40px;
 width:100%;
-max-width:900px;
+max-width:950px;
+
 }
 
 /* card */
 
 .card{
+
 background:#020617;
 border:1px solid #0f172a;
 padding:25px;
-border-radius:12px;
+border-radius:14px;
+margin-bottom:25px;
+
 }
 
 /* endpoint */
 
 .endpoint{
+
 display:flex;
-gap:10px;
 align-items:center;
-background:#020617;
-border:1px solid #0f172a;
+gap:10px;
 padding:10px;
+border:1px solid #0f172a;
 border-radius:8px;
+
 }
 
 .method{
+
 background:#059669;
 padding:4px 10px;
 border-radius:6px;
+font-size:14px;
+
 }
 
 .path{
+
 color:#38bdf8;
+
 }
 
 /* param */
 
 .param{
-background:#020617;
+
 border:1px solid #0f172a;
 padding:10px;
 border-radius:8px;
 margin-top:10px;
+
 }
 
 /* code */
 
 code{
+
 display:block;
 background:#020617;
 border:1px solid #0f172a;
@@ -129,23 +190,28 @@ padding:15px;
 border-radius:8px;
 margin-top:10px;
 color:#38bdf8;
+word-break:break-all;
+
 }
 
-/* input */
+/* inputs */
 
 input{
+
 width:100%;
 padding:12px;
 margin-top:10px;
-background:#020617;
-border:1px solid #0f172a;
 border-radius:8px;
+border:1px solid #0f172a;
+background:#020617;
 color:white;
+
 }
 
-/* button */
+/* buttons */
 
 button{
+
 margin-top:10px;
 padding:10px 18px;
 border:none;
@@ -153,31 +219,50 @@ border-radius:8px;
 background:#2563eb;
 color:white;
 cursor:pointer;
+font-weight:600;
+
 }
 
 button:hover{
+
 background:#1d4ed8;
+
 }
 
 /* response */
 
 .response{
+
 margin-top:15px;
-background:#020617;
 border:1px solid #0f172a;
+background:#020617;
 padding:15px;
 border-radius:8px;
 white-space:pre-wrap;
+
 }
 
-/* sections */
+/* section */
 
 .section{
+
 display:none;
+
 }
 
 .section.active{
+
 display:block;
+
+}
+
+/* counter */
+
+.counter{
+
+margin-top:10px;
+color:#38bdf8;
+
 }
 
 /* mobile */
@@ -189,17 +274,23 @@ display:block;
 }
 
 .sidebar{
+
 transform:translateX(-260px);
-transition:0.3s;
+transition:.3s;
+
 }
 
 .sidebar.active{
+
 transform:translateX(0);
+
 }
 
 .content{
+
 margin-left:0;
 padding:25px;
+
 }
 
 }
@@ -216,11 +307,11 @@ padding:25px;
 
 <div class="logo">Harblx API</div>
 
-<a onclick="showSection('endpoint')">Endpoint</a>
-<a onclick="showSection('params')">Parameters</a>
-<a onclick="showSection('request')">Example Request</a>
-<a onclick="showSection('test')">Test API</a>
-<a onclick="showSection('auth')">Authentication</a>
+<a class="active" onclick="showSection(event,'endpoint')">Endpoint</a>
+<a onclick="showSection(event,'params')">Parameters</a>
+<a onclick="showSection(event,'request')">Example Request</a>
+<a onclick="showSection(event,'test')">Test API</a>
+<a onclick="showSection(event,'auth')">Authentication</a>
 
 </div>
 
@@ -241,11 +332,13 @@ padding:25px;
 
 </div>
 
-</div>
+<p class="counter">Requests today: <span id="count">0</span></p>
 
 </div>
 
-<!-- parameters -->
+</div>
+
+<!-- params -->
 
 <div id="params" class="section">
 
@@ -321,7 +414,7 @@ Response sẽ hiện ở đây...
 
 <h2>Authentication</h2>
 
-<p>All API requests require an API key.</p>
+<p>All requests require an API key.</p>
 
 <code>
 
@@ -338,18 +431,28 @@ api-key=YOUR_API_KEY
 <script>
 
 function toggleMenu(){
+
 document.querySelector(".sidebar").classList.toggle("active")
+
 }
 
-function showSection(id){
+function showSection(e,id){
 
 document.querySelectorAll(".section").forEach(s=>{
 s.classList.remove("active")
 })
 
+document.querySelectorAll(".sidebar a").forEach(a=>{
+a.classList.remove("active")
+})
+
 document.getElementById(id).classList.add("active")
 
+e.target.classList.add("active")
+
 }
+
+/* copy */
 
 function copyReq(){
 
@@ -361,14 +464,30 @@ alert("Copied!")
 
 }
 
+/* fake counter */
+
+let count=0
+
+setInterval(()=>{
+
+count+=Math.floor(Math.random()*3)
+
+document.getElementById("count").innerText=count
+
+},2000)
+
+/* test api */
+
 async function testAPI(){
 
 let url=document.getElementById("urlInput").value
 let key=document.getElementById("keyInput").value
 
 if(!url){
+
 alert("Paste URL first")
 return
+
 }
 
 let api=`https://api.harblx.online/v1/bypass?url=${encodeURIComponent(url)}&api-key=${key}`
