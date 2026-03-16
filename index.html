@@ -1,610 +1,729 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ZEN-API | Documentation</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
-  <style>
-    :root {
-      --bg: #050505;
-      --bg-soft: #101010;
-      --card: rgba(14, 14, 14, 0.9);
-      --border: rgba(255, 255, 255, 0.14);
-      --text: #f3f3f3;
-      --muted: #a3a3a3;
-      --accent: #ffffff;
-      --accent-2: #d4d4d4;
-      --success: #22c55e;
-      --method: #f59e0b;
-      --code-bg: #0a0a0a;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#050505">
+    <meta name="description" content="Profile of mizuhara">
+    
+    <title>mizuhara | Profile</title>
+    <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/598301893877432341/99fb381a57a09966fdb91e723950179b.png?size=1024">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/style.css">
 
-    * {
-      box-sizing: border-box;
-    }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    
+    <style>
+        body { cursor: none !important; }
+        
+        #cursor-dot, #cursor-outline {
+            display: none;
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 999999 !important;
+        }
+        
+        #cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color, #ff3b3b);
+            box-shadow: 0 0 10px var(--accent-color, #ff3b3b);
+        }
 
-    body {
-      margin: 0;
-      font-family: "Sora", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(1200px 500px at 80% -10%, rgba(255, 255, 255, 0.08), transparent 60%),
-        radial-gradient(900px 600px at -10% 10%, rgba(255, 255, 255, 0.06), transparent 60%),
-        linear-gradient(160deg, #020202 0%, #090909 50%, #000000 100%);
-      min-height: 100vh;
-    }
+        #cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: width 0.15s, height 0.15s, background-color 0.15s;
+        }
 
-    .shell {
-      width: min(1120px, 92vw);
-      margin: 40px auto 70px;
-      position: relative;
-    }
+        body.hovering #cursor-outline {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent-color, #ff3b3b);
+        }
 
-    .hero {
-      border: 1px solid var(--border);
-      background: linear-gradient(145deg, rgba(18, 18, 18, 0.96), rgba(9, 9, 9, 0.92));
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: 0 25px 70px rgba(2, 6, 23, 0.45);
-    }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.005) !important;
+            backdrop-filter: blur(2px) !important;
+            -webkit-backdrop-filter: blur(2px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+        }
 
-    .badge {
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.24);
-      color: #ededed;
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
+        .activity-card {
+            background: rgba(40, 40, 40, 0.45) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.03) !important;
+        }
 
-    h1 {
-      margin: 14px 0 10px;
-      font-size: clamp(28px, 3.5vw, 44px);
-      line-height: 1.06;
-    }
+        .anim-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
+        .anim-active {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
 
-    .subtitle {
-      margin: 0;
-      color: var(--muted);
-      max-width: 760px;
-      line-height: 1.6;
-    }
+        #click-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #050505;
+            z-index: 99998;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: opacity 0.6s ease, visibility 0.6s;
+        }
 
-    .toolbar {
-      margin-top: 22px;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(180px, 1fr));
-      gap: 12px;
-    }
+        .click-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #fff;
+            letter-spacing: 2px;
+            animation: blink 1.5s infinite;
+        }
 
-    .field {
-      background: rgba(12, 12, 12, 0.85);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
 
-    .field label {
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-    }
+        .view-counter {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #ddd;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
 
-    .field input {
-      width: 100%;
-      border: 0;
-      outline: 0;
-      background: transparent;
-      color: var(--text);
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 13px;
-    }
+        .view-counter.show {
+            opacity: 1;
+        }
 
-    .endpoint-grid {
-      margin-top: 22px;
-      display: grid;
-      gap: 14px;
-    }
+        .bio-container {
+            min-height: 28px;
+            display: block;
+            margin-bottom: 20px;
+        }
 
-    .endpoint-card {
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      background: var(--card);
-      backdrop-filter: blur(3px);
-      overflow: hidden;
-    }
-
-    .endpoint-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 16px 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .method {
-      display: inline-block;
-      font-family: "IBM Plex Mono", monospace;
-      color: var(--method);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border: 1px solid rgba(245, 158, 11, 0.35);
-      border-radius: 8px;
-      padding: 5px 8px;
-      font-weight: 500;
-      margin-bottom: 10px;
-    }
-
-    .path {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 14px;
-      color: #f5f5f5;
-      margin-top: 2px;
-      word-break: break-all;
-    }
-
-    .summary {
-      color: var(--muted);
-      margin: 8px 0 0;
-      font-size: 14px;
-    }
-
-    .endpoint-example {
-      margin: 0 0 10px;
-      color: #d4d4d4;
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 12px;
-      word-break: break-all;
-    }
-
-    .endpoint-body {
-      padding: 14px 18px 18px;
-    }
-
-    .tabs {
-      display: inline-flex;
-      gap: 6px;
-      background: rgba(20, 20, 20, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 12px;
-      padding: 5px;
-      margin-bottom: 10px;
-    }
-
-    .tab-btn {
-      border: 0;
-      cursor: pointer;
-      color: var(--muted);
-      background: transparent;
-      border-radius: 8px;
-      padding: 8px 10px;
-      font-size: 12px;
-      font-family: "Sora", sans-serif;
-    }
-
-    .tab-btn.active {
-      background: linear-gradient(130deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.12));
-      color: #ffffff;
-    }
-
-    pre {
-      margin: 0;
-      background: var(--code-bg);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 12px;
-      padding: 14px;
-      overflow-x: auto;
-    }
-
-    .code-meta {
-      margin-bottom: 8px;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-family: "IBM Plex Mono", monospace;
-    }
-
-    .code-meta.node {
-      color: #86efac;
-    }
-
-    .code-meta.python {
-      color: #93c5fd;
-    }
-
-    .code-meta.curl {
-      color: #fcd34d;
-    }
-
-    code {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 13px;
-      line-height: 1.6;
-      color: #f5f5f5;
-      white-space: pre;
-    }
-
-    .hljs {
-      background: transparent !important;
-      padding: 0 !important;
-    }
-
-    .response-list {
-      margin-top: 12px;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .test-row {
-      margin-top: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .test-btn {
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: #141414;
-      color: #f5f5f5;
-      border-radius: 9px;
-      padding: 8px 12px;
-      font-family: "Sora", sans-serif;
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    .test-btn:hover {
-      border-color: rgba(255, 255, 255, 0.45);
-    }
-
-    .test-status {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 12px;
-      color: var(--muted);
-      padding: 6px 9px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .test-status.loading {
-      color: #fcd34d;
-      border-color: rgba(252, 211, 77, 0.45);
-    }
-
-    .test-status.ok {
-      color: #86efac;
-      border-color: rgba(34, 197, 94, 0.45);
-    }
-
-    .test-status.err {
-      color: #fca5a5;
-      border-color: rgba(239, 68, 68, 0.45);
-    }
-
-    .test-output {
-      margin-top: 10px;
-    }
-
-    .test-output pre {
-      min-height: 170px;
-      max-height: 320px;
-      overflow: auto;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(245, 158, 11, 0.7) rgba(255, 255, 255, 0.08);
-    }
-
-    .test-output pre::-webkit-scrollbar {
-      width: 10px;
-      height: 10px;
-    }
-
-    .test-output pre::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: 10px;
-    }
-
-    .test-output pre::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, rgba(245, 158, 11, 0.88), rgba(245, 158, 11, 0.62));
-      border-radius: 10px;
-      border: 2px solid rgba(10, 10, 10, 0.95);
-    }
-
-    .test-output pre::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(180deg, rgba(245, 158, 11, 1), rgba(245, 158, 11, 0.78));
-    }
-
-    .response-chip {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 12px;
-      padding: 6px 9px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      color: var(--muted);
-    }
-
-    .response-chip.ok {
-      border-color: rgba(34, 197, 94, 0.45);
-      color: #86efac;
-    }
-
-    @media (max-width: 860px) {
-      .toolbar {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+        .tooltip-copy {
+            position: fixed;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #23a559;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 10000;
+            pointer-events: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+    </style>
 </head>
-<body>
-  <main class="shell">
-    <section class="hero">
-      <span class="badge">ZEN-API | Documentation</span>
-      <h1>Endpoint Docs With Ready-to-Run Examples</h1>
-      <p class="subtitle">
-        Documentation of ZEN-API endpoints. Update the API key and sample target URL below to generate live examples for Node.js, Python, and curl.
-      </p>
-      <div class="toolbar">
-        <div class="field">
-          <label for="apiKeyInput">x-api-key</label>
-          <input id="apiKeyInput" value="YOUR_API_KEY" />
-        </div>
-        <div class="field">
-          <label for="targetUrlInput">Sample url query</label>
-          <input id="targetUrlInput" value="https://link-center.net/3476997/LlKUzgAy1bUT" />
-        </div>
-      </div>
-    </section>
-    <section class="endpoint-grid" id="endpointGrid"></section>
-  </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-  <script>
-    const API_BASE_URL = "https://api.izen.lol";
-    const langByPath = {};
-    const state = {
-      baseUrl: API_BASE_URL,
-      apiKey: "YOUR_API_KEY",
-      sampleUrl: "https://link-center.net/3476997/LlKUzgAy1bUT",
-      spec: null
-    };
+<body class="theme-blue">
 
-    const apiKeyInput = document.getElementById("apiKeyInput");
-    const targetUrlInput = document.getElementById("targetUrlInput");
-    const endpointGrid = document.getElementById("endpointGrid");
+    <div id="tooltip-copy" class="tooltip-copy">Đã sao chép!</div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
 
-    function escapeHtml(value) {
-      return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-    }
+    <div id="click-overlay">
+        <div class="click-text">[ click to enter ]</div>
+    </div>
 
-    function getEndpointCode(path, method, lang) {
-      const urlWithQuery = buildRequestUrl(path);
+    <div class="view-counter" id="view-counter">
+        <i class="fas fa-eye"></i> 18962
+    </div>
 
-      if (lang === "node") {
-        return `const endpoint = "${urlWithQuery}";
+    
+        <video class="video-bg" id="bg-video" loop muted playsinline webkit-playsinline preload="auto">
+            <source src="/uploads/bgFile-1773624770947-836775851.mp4" type="video/mp4">
+            <source src="/uploads/bgFile-1773624770947-836775851.mp4" type="video/webm">
+        </video>
+    
 
-const response = await fetch(endpoint, {
-  method: "${method.toUpperCase()}",
-  headers: {
-    "x-api-key": "${state.apiKey}"
-  }
-});
+    <div class="dark-overlay"></div>
+    <div class="noise-overlay"></div>
 
-const data = await response.json();
-console.log(data);`;
-      }
+    <div class="glass-card js-tilt" id="main-card">
+        <div class="card-inner">
+            
+            <!-- FRONT SIDE -->
+            <div class="card-face card-front">
+                <div class="profile-header">
+                    
+                    <div class="avatar-wrapper anim-item">
+                        <div class="avatar-box">
+                            <img src="https://cdn.discordapp.com/avatars/598301893877432341/99fb381a57a09966fdb91e723950179b.png?size=1024" class="avatar" id="user-avatar">
+                             
+                                <img src="https://cdn.discordapp.com/avatar-decoration-presets/a_c4395b178205217ad09cae605ef11b1a.png?size=240&amp;passthrough=true" class="avatar-decoration" id="user-decoration"> 
+                            
+                            <div id="discord-status" class="status-indicator offline"></div>
+                        </div>
+                        <div class="status-bubble" id="status-bubble" style="display:flex">
+                            CẦN VND
+                        </div>
+                    </div>
 
-      if (lang === "python") {
-        return `import requests
+                    <h1 class="username anim-item" id="user-name">
+                        mizuhara <i class="fas fa-circle-check verify-badge"></i>
+                    </h1>
 
-endpoint = "${urlWithQuery}"
-headers = {"x-api-key": "${state.apiKey}"}
+                    <div class="user-meta-container anim-item">
+                        <span class="tag-username" id="user-tag">@mizuhara0.0</span>
+                        
+                            <div class="badges-list" id="badges-list">
+                                 
+                                    <img src="https://raw.githubusercontent.com/mezotv/discord-badges/master/assets/hypesquadbrilliance.svg" class="badge-icon"> 
+                                
+                            </div>
+                        
+                    </div>
 
-response = requests.${method.toLowerCase()}(endpoint, headers=headers, timeout=30)
-print(response.status_code)
-print(response.json())`;
-      }
+                    <div class="bio-container anim-item"> 
+                        <span id="typed-bio"></span> 
+                    </div>
 
-      return `curl -X ${method.toUpperCase()} "${urlWithQuery}" \\
-  -H "x-api-key: ${state.apiKey}"`;
-    }
+                    <div class="activity-card anim-item" id="activity-card" style="display:none;">
+                        <div class="activity-images">
+                            <img id="act-image" src="" class="act-large-img" style="display:none;">
+                            <div id="act-placeholder" class="act-placeholder" style="display:none;">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <img id="act-small-image" src="" class="act-small-img" style="display:none;">
+                        </div>
+                        <div class="activity-info">
+                            <div class="act-header">PLAYING</div>
+                            <div class="act-name" id="act-name"></div>
+                            <div class="act-details" id="act-details"></div>
+                            <div class="act-state" id="act-state"></div>
+                            <div class="act-timer" id="act-timer" style="display:none;">00:00 elapsed</div>
+                        </div>
+                    </div>
+                </div>
 
-    function buildRequestUrl(path) {
-      const base = state.baseUrl.replace(/\/+$/, "");
-      const encodedTarget = encodeURIComponent(state.sampleUrl);
-      return path === "/v1/supported"
-        ? `${base}${path}`
-        : `${base}${path}?url=${encodedTarget}`;
-    }
+                <div class="links-container anim-item">
+                    
+                        <a href="https://fb.com/@mizuhara0.0" class="link-item" target="_blank"><i class="fab fa-facebook"></i></a>
+                    
+                    
+                        <a href="https://discord.gg/hyperig-official-1178548674050146334" class="link-item" target="_blank"><i class="fab fa-discord"></i></a>
+                    
+                    
+                        <a href="https://youtube.com/@mizuhara0.0" class="link-item" target="_blank"><i class="fab fa-youtube"></i></a>
+                    
+                    
+                        <a href="https://tiktok.com/@mizuhara0.0" class="link-item" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    
+                    
+                        <a href="https://taphoamizu.com/" class="link-item" target="_blank"><i class="fas fa-store"></i></a>
+                    
+                    
+                    <!-- NÚT BANK ĐỂ FLIP CARD -->
+                    <button class="link-item" onclick="toggleBank(true)" id="bank-btn">
+                        <i class="fas fa-university"></i>
+                    </button>
+                </div>
 
-    function buildEndpointTemplate(path) {
-      return path === "/v1/supported"
-        ? `${API_BASE_URL}${path}`
-        : `${API_BASE_URL}${path}?url={encodedurl}`;
-    }
-
-    function renderLiveTester(path, method) {
-      return `
-        <div class="test-row">
-          <button class="test-btn" type="button" data-test-path="${path}" data-test-method="${method}">Test</button>
-          <span class="test-status" data-test-status="${path}">Ready</span>
-        </div>
-        <div class="test-output">
-          <pre><code data-test-output="${path}">// Response will appear here</code></pre>
-        </div>
-      `;
-    }
-
-    function renderTabs(path, method) {
-      const currentLang = langByPath[path] || "node";
-      const syntaxByLang = {
-        node: "javascript",
-        python: "python",
-        curl: "bash"
-      };
-      const labelByLang = {
-        node: "NODEJS",
-        python: "PYTHON",
-        curl: "CURL"
-      };
-      const tabs = [
-        { key: "node", label: "NODEJS" },
-        { key: "python", label: "PYTHON" },
-        { key: "curl", label: "CURL" }
-      ];
-
-      return `
-        <div class="tabs">
-          ${tabs.map((tab) => `
-            <button
-              class="tab-btn ${tab.key === currentLang ? "active" : ""}"
-              data-path="${path}"
-              data-lang="${tab.key}"
-              type="button"
-            >${tab.label}</button>
-          `).join("")}
-        </div>
-        <div class="code-meta ${currentLang}">${labelByLang[currentLang]}</div>
-        <pre><code class="language-${syntaxByLang[currentLang]}">${escapeHtml(getEndpointCode(path, method, currentLang))}</code></pre>
-      `;
-    }
-
-    function renderEndpoints() {
-      const entries = Object.entries(state.spec.paths || {});
-      endpointGrid.innerHTML = entries.map(([path, operations]) => {
-        const method = Object.keys(operations)[0];
-        const op = operations[method];
-        const responses = Object.keys(op.responses || {});
-        return `
-          <article class="endpoint-card">
-            <header class="endpoint-head">
-              <div>
-                <span class="method">${method}</span>
-                <div class="path">${path}</div>
-                <p class="summary">${escapeHtml(op.summary || "No summary")}</p>
-              </div>
-            </header>
-            <div class="endpoint-body">
-              <p class="endpoint-example">Example: ${escapeHtml(buildEndpointTemplate(path))}</p>
-              ${renderTabs(path, method)}
-              ${renderLiveTester(path, method)}
-              <div class="response-list">
-                ${responses.map((code) => `<span class="response-chip ${String(code).startsWith("2") ? "ok" : ""}">${code}</span>`).join("")}
-              </div>
+                <div class="footer anim-item">
+                    © taphoamizu
+                </div>
             </div>
-          </article>
-        `;
-      }).join("");
 
-      endpointGrid.querySelectorAll(".tab-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const path = btn.getAttribute("data-path");
-          const lang = btn.getAttribute("data-lang");
-          if (!path || !lang) return;
-          langByPath[path] = lang;
-          renderEndpoints();
-        });
-      });
+            <!-- BACK SIDE -->
+            <div class="card-face card-back">
+                <div class="bank-container">
+                    
+                    <div class="qr-frame">
+                        <img src="/uploads/qrFile-1773624770981-904971608.gif" class="qr-img" alt="QR Code">
+                    </div>
+                    
+                    
+                    <div class="bank-details">
+                        <h2 class="bank-title">Vietcombank</h2>
+                        
+                        <div class="bank-row">
+                            <div class="bank-text-group">
+                                <span class="bank-label">CHỦ TÀI KHOẢN</span>
+                                <span class="bank-value">Bui Quy Diem</span>
+                            </div>
+                            <button class="copy-btn" onclick="copyToClipboard('Bui Quy Diem')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
 
-      endpointGrid.querySelectorAll(".test-btn").forEach((btn) => {
-        btn.addEventListener("click", async () => {
-          const path = btn.getAttribute("data-test-path");
-          const method = btn.getAttribute("data-test-method");
-          if (!path || !method) return;
+                        <div class="bank-row">
+                            <div class="bank-text-group">
+                                <span class="bank-label">SỐ TÀI KHOẢN</span>
+                                <span class="bank-value">1051099160</span>
+                            </div>
+                            <button class="copy-btn" onclick="copyToClipboard('1051099160')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
 
-          const statusEl = endpointGrid.querySelector(`[data-test-status="${CSS.escape(path)}"]`);
-          const outputEl = endpointGrid.querySelector(`[data-test-output="${CSS.escape(path)}"]`);
-          if (!statusEl || !outputEl) return;
+                    <button class="return-btn" onclick="toggleBank(false)">
+                        <i class="fas fa-undo"></i> Quay lại
+                    </button>
+                </div>
+            </div>
 
-          const url = buildRequestUrl(path);
-          statusEl.className = "test-status loading";
-          statusEl.textContent = "Loading...";
-          outputEl.textContent = "";
+        </div>
+    </div>
 
-          try {
-            const response = await fetch(url, {
-              method: method.toUpperCase(),
-              headers: {
-                "x-api-key": state.apiKey
-              }
+    
+        <div class="music-widget hover-target" onclick="toggleMusic()">
+            <div class="music-icon-spin">
+                <img src="https://cdn.discordapp.com/avatars/598301893877432341/99fb381a57a09966fdb91e723950179b.png?size=1024" style="width:100%; height:100%; border-radius:50%; opacity:0.8;">
+            </div>
+            <div class="music-content">
+                <div class="music-label">Background Music</div>
+                <div id="music-status">Click to Play</div>
+            </div>
+            <div class="music-control"> 
+                <i id="play-icon" class="fas fa-play"></i> 
+            </div>
+            
+        </div>
+    
+
+    <script>
+        const cursorDot = document.getElementById("cursor-dot");
+        const cursorOutline = document.getElementById("cursor-outline");
+
+        if (window.innerWidth >= 992) {
+            window.addEventListener("mousemove", function(e) {
+                if (cursorDot.style.display !== 'block') {
+                    cursorDot.style.display = 'block';
+                    cursorOutline.style.display = 'block';
+                }
+                
+                const posX = e.clientX;
+                const posY = e.clientY;
+
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+                
+                cursorOutline.animate({
+                    left: `${posX}px`,
+                    top: `${posY}px`
+                }, { duration: 100, fill: "forwards" });
             });
 
-            const raw = await response.text();
-            let parsed;
+            window.addEventListener('mousedown', () => {
+                cursorOutline.style.transform = "translate(-50%, -50%) scale(0.7)";
+            });
+            window.addEventListener('mouseup', () => {
+                cursorOutline.style.transform = "translate(-50%, -50%) scale(1)";
+            });
+            const hoverTargets = document.querySelectorAll('a, button, .music-widget, .glass-card, .link-item, #click-overlay, .copy-btn, .return-btn');
+            hoverTargets.forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+            });
+        }
+
+        // ==== FLIP CARD FUNCTION ====
+        function toggleBank(showBank) {
+            const card = document.getElementById('main-card');
+            card.classList.remove('animate-jump', 'animate-return');
+            void card.offsetWidth; // Force reflow
+
+            if (showBank) {
+                card.classList.add('animate-jump');
+                setTimeout(() => { 
+                    card.classList.add('is-flipped'); 
+                }, 100);
+            } else {
+                card.classList.add('animate-return');
+                setTimeout(() => { 
+                    card.classList.remove('is-flipped'); 
+                }, 100);
+            }
+        }
+
+        // ==== COPY TO CLIPBOARD FUNCTION ====
+        function copyToClipboard(text) {
+            if(!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                const tooltip = document.getElementById('tooltip-copy');
+                tooltip.style.opacity = '1';
+                setTimeout(() => { 
+                    tooltip.style.opacity = '0'; 
+                }, 2000);
+            });
+        }
+
+        const overlay = document.getElementById('click-overlay');
+        const videoBg = document.getElementById('bg-video'); 
+        const audioTag = document.getElementById('bg-music');
+        const viewCounter = document.getElementById('view-counter');
+        const playIcon = document.getElementById('play-icon');
+        const musicStatus = document.getElementById('music-status');
+        const vinyl = document.querySelector('.music-icon-spin');
+        const originalBio = "Uy tín có thừa chỉ thiếu tiền";
+        const lastOnlineTimestamp = 1773672604992;
+        let typedInstance = null;
+        let isOfflineMode = false;
+        let hasClicked = false;
+
+        if (videoBg) {
+            videoBg.muted = true;
+            videoBg.setAttribute('playsinline', 'true');
+            videoBg.setAttribute('webkit-playsinline', 'true');
+            
+            const isEdge = /Edge|Edg/.test(navigator.userAgent);
+            if (isEdge) {
+                const src = videoBg.querySelector('source').src;
+                videoBg.querySelector('source').src = '';
+                videoBg.load();
+                videoBg.querySelector('source').src = src;
+            }
+            videoBg.load();
+        }
+
+        document.documentElement.style.setProperty('--accent-color', getComputedStyle(document.documentElement).getPropertyValue('--accent-color') || '#ff3b3b');
+        document.documentElement.style.setProperty('--discord-online', '#23a559');
+        document.documentElement.style.setProperty('--discord-idle', '#f0b232');
+        document.documentElement.style.setProperty('--discord-dnd', '#f23f43');
+        document.documentElement.style.setProperty('--discord-offline', '#80848e');
+
+        function setPlayingUI() {
+            if(playIcon) playIcon.className = "fas fa-pause";
+            if(musicStatus) { musicStatus.innerText = "Playing..."; musicStatus.style.color = "#23a559"; }
+            if(vinyl) vinyl.style.animationPlayState = "running";
+        }
+
+        function setPausedUI() {
+            if(playIcon) playIcon.className = "fas fa-play";
+            if(musicStatus) { musicStatus.innerText = "Paused/Muted"; musicStatus.style.color = "#aaa"; }
+            if(vinyl) vinyl.style.animationPlayState = "paused";
+        }
+
+        if(overlay) {
+            overlay.addEventListener('click', () => {
+                if(hasClicked) return;
+                hasClicked = true;
+
+                overlay.style.opacity = '0'; 
+                overlay.style.visibility = 'hidden';
+                
+                const items = document.querySelectorAll('.anim-item');
+                items.forEach((item, index) => { 
+                    setTimeout(() => { 
+                        item.classList.add('anim-active'); 
+                    }, index * 100); 
+                });
+
+                setTimeout(() => {
+                     startTyped(originalBio);
+                }, 300);
+
+                if (videoBg) {
+                    videoBg.muted = false;
+                    videoBg.play().then(setPlayingUI).catch(e => {
+                        console.log("Video playback blocked");
+                        setPausedUI();
+                    });
+                } else if (audioTag) {
+                    audioTag.play().then(setPlayingUI).catch(err => setPausedUI());
+                }
+                
+                if(viewCounter) viewCounter.classList.add('show');
+            });
+        }
+
+        function toggleMusic() {
+            if (videoBg) {
+                if (videoBg.muted) {
+                    videoBg.muted = false;
+                    setPlayingUI();
+                } else {
+                    videoBg.muted = true;
+                    setPausedUI();
+                }
+            } else if (audioTag) {
+                if (audioTag.paused) { 
+                    audioTag.play();
+                    setPlayingUI(); 
+                } else { 
+                    audioTag.pause();
+                    setPausedUI(); 
+                }
+            }
+        }
+
+        function startTyped(text) {
+            if(typedInstance) { 
+                typedInstance.destroy();
+            }
+            if(!text || text.trim() === "") return;
+
+            typedInstance = new Typed('#typed-bio', { 
+                strings: [text], 
+                typeSpeed: 40, 
+                backSpeed: 20, 
+                startDelay: 100, 
+                backDelay: 3000, 
+                loop: true, 
+                showCursor: true, 
+                cursorChar: '|',
+                autoInsertCss: true 
+            });
+        }
+
+        VanillaTilt.init(document.querySelector(".glass-card"), { 
+            max: 12, speed: 400, glare: true, "max-glare": 0.15, scale: 1.01 
+        });
+
+        function formatTimeAgo(timestamp) {
+            const diff = Date.now() - timestamp;
+            const minutes = Math.floor(diff / 60000);
+            if(minutes < 1) return "vài giây trước";
+            if(minutes < 60) return `${minutes} phút trước`;
+            const hours = Math.floor(minutes / 60);
+            if(hours < 24) return `${hours} giờ trước`;
+            return `${Math.floor(hours/24)} ngày trước`;
+        }
+
+        const DISCORD_ID = "598301893877432341";
+        const lanyard = new WebSocket("wss://api.lanyard.rest/socket");
+        let heartbeatInterval;
+
+        lanyard.onopen = () => { 
+            lanyard.send(JSON.stringify({ op: 2, d: { subscribe_to_id: DISCORD_ID } }));
+        };
+
+        lanyard.onmessage = (event) => {
             try {
-              parsed = JSON.parse(raw);
-            } catch {
-              parsed = raw;
+                const data = JSON.parse(event.data);
+                if (data.op === 1) { 
+                    heartbeatInterval = setInterval(() => { 
+                        lanyard.send(JSON.stringify({ op: 3 })); 
+                    }, data.d.heartbeat_interval);
+                }
+                if (data.t === "INIT_STATE" || data.t === "PRESENCE_UPDATE") { 
+                    updatePresence(data.d || data);
+                }
+            } catch(e) {}
+        };
+
+        setInterval(async () => {
+            try {
+                const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
+                const data = await res.json();
+                if(data.success) updatePresence(data.data);
+            } catch(e) {}
+        }, 5000);
+
+        function updatePresence(data) {
+            const statusDiv = document.getElementById('discord-status');
+            if(statusDiv) statusDiv.className = 'status-indicator ' + data.discord_status;
+
+            if (data.discord_status === 'offline') {
+                if (!isOfflineMode) {
+                    isOfflineMode = true;
+                    const timeAgo = formatTimeAgo(lastOnlineTimestamp);
+                    if(hasClicked) startTyped(`Đã offline ${timeAgo}`);
+                }
+            } else {
+                if (isOfflineMode) {
+                    isOfflineMode = false;
+                    if(hasClicked) startTyped(originalBio);
+                }
             }
 
-            statusEl.className = `test-status ${response.ok ? "ok" : "err"}`;
-            statusEl.textContent = `Status ${response.status}`;
-            outputEl.textContent = typeof parsed === "string"
-              ? parsed
-              : JSON.stringify(parsed, null, 2);
-          } catch (err) {
-            statusEl.className = "test-status err";
-            statusEl.textContent = "Request failed";
-            outputEl.textContent = String(err);
-          }
+            if(data.discord_user) {
+                const nameEl = document.getElementById('user-name');
+                const tagEl = document.getElementById('user-tag');
+                const avatarEl = document.getElementById('user-avatar');
+                const decorationEl = document.getElementById('user-decoration');
 
-          if (window.hljs) {
-            outputEl.className = "language-json";
-            delete outputEl.dataset.highlighted;
-            window.hljs.highlightElement(outputEl);
-          }
-        });
-      });
+                if(nameEl) nameEl.innerHTML = (data.discord_user.global_name || data.discord_user.username) + ' <i class="fas fa-circle-check verify-badge"></i>';
+                if(tagEl) tagEl.innerText = '@' + data.discord_user.username;
+                if(avatarEl && data.discord_user.avatar) {
+                    const ext = data.discord_user.avatar.startsWith("a_") ? "gif" : "png";
+                    avatarEl.src = `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${data.discord_user.avatar}.${ext}?size=1024`;
+                }
 
-      if (window.hljs) {
-        endpointGrid.querySelectorAll("pre code").forEach((block) => {
-          delete block.dataset.highlighted;
-          window.hljs.highlightElement(block);
-        });
-      }
-    }
+                if(decorationEl) {
+                    if(data.discord_user.avatar_decoration_data) {
+                        decorationEl.src = `https://cdn.discordapp.com/avatar-decoration-presets/${data.discord_user.avatar_decoration_data.asset}.png?size=240&passthrough=true`;
+                        decorationEl.style.display = 'block';
+                    } else {
+                        decorationEl.style.display = 'none';
+                    }
+                }
+            }
 
-    async function initDocs() {
-      try {
-        const response = await fetch("/docs/openapi.json");
-        state.spec = await response.json();
+            const bubbleEl = document.getElementById('status-bubble');
+            const customStatus = data.activities.find(a => a.type === 4);
+            
+            if (customStatus && bubbleEl) {
+                let html = "";
+                if (customStatus.emoji) {
+                    if (customStatus.emoji.id) {
+                        html += `<img src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.png?size=24" style="width:20px; vertical-align:middle; margin-right:4px;">`;
+                    } else {
+                        html += `<span style="margin-right:4px;">${customStatus.emoji.name}</span>`;
+                    }
+                }
+                if (customStatus.state) html += customStatus.state;
+                bubbleEl.innerHTML = html;
+                bubbleEl.style.display = 'flex';
+            } else if (bubbleEl) {
+                bubbleEl.style.display = 'none';
+            }
 
-        apiKeyInput.addEventListener("input", () => {
-          state.apiKey = apiKeyInput.value.trim() || "YOUR_API_KEY";
-          renderEndpoints();
-        });
-        targetUrlInput.addEventListener("input", () => {
-          state.sampleUrl = targetUrlInput.value.trim() || "https://linkvertise.com/";
-          renderEndpoints();
-        });
+            const activity = data.activities.find(a => a.type === 0);
+            const card = document.getElementById('activity-card');
+            
+            if(!activity) { 
+                if(card) card.style.display = 'none';
+                return; 
+            }
+            if(card) { 
+                card.style.display = 'flex';
+                if(overlay.style.opacity === '0') { card.classList.add('anim-active'); } 
+            }
 
-        renderEndpoints();
-      } catch (err) {
-        endpointGrid.innerHTML = `<article class="endpoint-card"><div class="endpoint-body">Failed to load OpenAPI spec.</div></article>`;
-      }
-    }
+            const nameEl = document.getElementById('act-name');
+            const detailsEl = document.getElementById('act-details'); 
+            const stateEl = document.getElementById('act-state');
+            const lgImg = document.getElementById('act-image'); 
+            const smImg = document.getElementById('act-small-image'); 
+            const placeholder = document.getElementById('act-placeholder');
+            const timer = document.getElementById('act-timer');
 
-    initDocs();
-  </script>
+            if(nameEl) nameEl.innerText = activity.name;
+            if(detailsEl) detailsEl.innerText = activity.details || "";
+            if(stateEl) { 
+                if (activity.state) { 
+                    stateEl.innerText = activity.state;
+                    stateEl.style.display = "block"; 
+                } else { 
+                    stateEl.style.display = "none";
+                } 
+            }
+
+            function getUrl(appId, assetId) {
+                if(!assetId) return null;
+                if(assetId.startsWith("mp:external/")) return `https://media.discordapp.net/external/${assetId.replace("mp:external/", "")}`;
+                if(assetId.startsWith("mp:")) return assetId.replace("mp:", "https://media.discordapp.net/");
+                return `https://cdn.discordapp.com/app-assets/${appId}/${assetId}.png`;
+            }
+
+            if (activity.assets && activity.assets.large_image) {
+                const url = getUrl(activity.application_id, activity.assets.large_image);
+                if(lgImg) { lgImg.src = url; lgImg.style.display = 'block'; }
+                if(placeholder) placeholder.style.display = 'none';
+            } else {
+                if(lgImg) lgImg.style.display = 'none';
+                if(placeholder) { 
+                    placeholder.style.display = 'flex';
+                    const isCode = (activity.name === "Code" || activity.application_id === "383226322780274689"); 
+                    placeholder.innerHTML = isCode ? '<i class="fas fa-code"></i>' : '<i class="fas fa-gamepad"></i>'; 
+                }
+            }
+
+            if (activity.assets && activity.assets.small_image) {
+                const url = getUrl(activity.application_id, activity.assets.small_image);
+                if(smImg) { smImg.src = url; smImg.style.display = 'block'; }
+            } else { 
+                if(smImg) smImg.style.display = 'none';
+            }
+            
+            if (activity.timestamps && activity.timestamps.start) {
+                if(timer) { 
+                    timer.style.display = 'block';
+                    timer.setAttribute('data-start', activity.timestamps.start); 
+                }
+            } else { 
+                if(timer) timer.style.display = 'none';
+            }
+        }
+
+        const targetTitle = "mizuhara | Profile";
+        let titleIndex = 0; 
+        let isDeleting = false;
+
+        function animateTitle() {
+            if (!isDeleting && titleIndex <= targetTitle.length) { 
+                document.title = targetTitle.substring(0, titleIndex + 1);
+                titleIndex++; 
+                if (titleIndex > targetTitle.length) { 
+                    isDeleting = true;
+                    setTimeout(animateTitle, 2000); 
+                    return; 
+                } 
+            } else if (isDeleting && titleIndex >= 0) { 
+                document.title = targetTitle.substring(0, titleIndex);
+                titleIndex--; 
+                if (titleIndex < 0) { 
+                    isDeleting = false;
+                    titleIndex = 0; 
+                } 
+            }
+            setTimeout(animateTitle, isDeleting ? 200 : 300);
+        }
+        animateTitle();
+        
+        setInterval(() => {
+            const timerEl = document.getElementById('act-timer');
+            if (!timerEl || timerEl.style.display === 'none') return;
+            
+            const startTimestamp = parseInt(timerEl.getAttribute('data-start'));
+            if(!startTimestamp) return;
+            
+            const diff = Date.now() - startTimestamp;
+            const hours = Math.floor(diff / 3600000); 
+            const minutes = Math.floor((diff % 3600000) / 60000); 
+            const seconds = Math.floor((diff % 60000) / 1000);
+            
+            let timeString = ""; 
+            if (hours > 0) timeString += `${hours}:`;
+            timeString += `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            timerEl.innerText = timeString + " elapsed";
+        }, 1000);
+    </script>
 </body>
 </html>
