@@ -133,7 +133,6 @@
 </head>
 <body>
 
-  <!-- THẺ AUDIO DÙNG CHUNG -->
   <audio id="audio-player"></audio>
 
   <div class="profile-card">
@@ -169,7 +168,7 @@
       <div class="np-left">
         <i class="fa-solid fa-music np-icon"></i>
         <div class="np-info">
-          <div id="np-song" class="np-title">Loading...</div>
+          <div id="np-song" class="np-title">Đang quét bài hát...</div>
           <div id="np-status" class="np-subtitle">Paused</div>
         </div>
       </div>
@@ -212,14 +211,12 @@
 
   <script>
     const DISCORD_USER_ID = "862273858214821929"; 
+    const GITHUB_USER = "DNHA05";
+    const GITHUB_REPO = "API-Docs";
 
-    // DANH SÁCH BÀI HÁT TỪ CÁC THƯ MỤC KHÁC NHAU
-    const playlist = [
-      { title: "Wn - id Thang Máy ft. 267", src: "./audio/Wn - id Thang Máy ft. 267.mp3" },
-      { title: "Song 2 — Custom Folder", src: "./music/song2.mp3" }
-    ];
-
+    let playlist = [];
     let currentTrack = 0;
+
     const audio = document.getElementById('audio-player');
     const playBtn = document.getElementById('play-btn');
     const nextBtn = document.getElementById('next-btn');
@@ -228,18 +225,47 @@
     const npSong = document.getElementById('np-song');
     const npStatus = document.getElementById('np-status');
 
+    // TỰ ĐỘNG TÌM BÀI HÁT TRONG THƯ MỤC AUDIO TRÊN GITHUB
+    async function loadPlaylistFromGithub() {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/audio`);
+        const files = await res.json();
+
+        if (Array.isArray(files)) {
+          playlist = files
+            .filter(file => file.name.endsWith('.mp3'))
+            .map(file => ({
+              title: file.name.replace('.mp3', ''),
+              src: `./audio/${encodeURIComponent(file.name)}`
+            }));
+
+          if (playlist.length > 0) {
+            loadTrack(currentTrack);
+          } else {
+            npSong.innerText = "Không thấy bài hát nào";
+          }
+        }
+      } catch (err) {
+        console.error("Lỗi đọc thư mục audio:", err);
+        npSong.innerText = "Lỗi kết nối bài hát";
+      }
+    }
+
     function loadTrack(index) {
-      audio.src = playlist[index].src;
-      npSong.innerText = playlist[index].title;
+      if (playlist[index]) {
+        audio.src = playlist[index].src;
+        npSong.innerText = playlist[index].title;
+      }
     }
 
     function playAudio() {
+      if (!playlist.length) return;
       audio.play().then(() => {
         playIcon.className = "fa-solid fa-pause";
         playIcon.style.marginLeft = "0px";
         waveBox.classList.remove('paused');
         npStatus.innerText = "Now playing";
-      }).catch(err => console.log("Cần tương tác người dùng để phát nhạc:", err));
+      }).catch(err => console.log("Cần tương tác để phát nhạc:", err));
     }
 
     function pauseAudio() {
@@ -250,9 +276,6 @@
       npStatus.innerText = "Paused";
     }
 
-    // Load bài hát đầu tiên
-    loadTrack(currentTrack);
-
     playBtn.addEventListener('click', () => {
       if (audio.paused) {
         playAudio();
@@ -262,18 +285,20 @@
     });
 
     nextBtn.addEventListener('click', () => {
+      if (!playlist.length) return;
       currentTrack = (currentTrack + 1) % playlist.length;
       loadTrack(currentTrack);
       playAudio();
     });
 
     audio.addEventListener('ended', () => {
+      if (!playlist.length) return;
       currentTrack = (currentTrack + 1) % playlist.length;
       loadTrack(currentTrack);
       playAudio();
     });
 
-    // LẤY DỮ LIỆU TỪ DISCORD LANYARD API
+    // CẬP NHẬT DISCORD PROFILE
     async function updateDiscordData() {
       const nameElem = document.getElementById('discord-username');
       const avatarElem = document.getElementById('discord-avatar');
@@ -319,10 +344,12 @@
           statusDot.classList.add(`status-${data.discord_status}`);
         }
       } catch (err) {
-        console.error("Lỗi:", err);
+        console.error("Lỗi Lanyard API:", err);
       }
     }
 
+    // KHỞI CHẠY HÀM
+    loadPlaylistFromGithub();
     updateDiscordData();
     setInterval(updateDiscordData, 10000);
   </script>
