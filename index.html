@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gojo Satoru - Bio Profile</title>
+  <title>DOKIDOKI Profile</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -14,7 +14,7 @@
     }
 
     body {
-      background-color: #0b0c10;
+      background-color: #0d0e12;
       color: #ffffff;
       min-height: 100vh;
       display: flex;
@@ -24,56 +24,48 @@
       overflow-x: hidden;
     }
 
-    /* Background Anime / Gojo Satoru Wallpaper */
-    .bg-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: url('https://images.alphacoders.com/131/1312385.jpeg') center/cover no-repeat;
-      filter: brightness(0.4) opacity(0.85);
-      z-index: 1;
-    }
-
-    /* Main Container Card */
+    /* Outer Container - Khung tổng */
     .profile-card {
       position: relative;
-      z-index: 2;
       width: 100%;
-      max-width: 440px;
+      max-width: 400px;
       margin: 20px;
-      background: rgba(20, 20, 28, 0.65);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(18, 19, 26, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 24px;
+      border-radius: 28px;
       overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
       text-align: center;
       padding-bottom: 24px;
     }
 
-    /* Banner Top */
+    /* Banner Gojo phía trên */
     .banner-container {
       position: relative;
       width: 100%;
-      height: 140px;
-      background: url('https://w0.peakpx.com/wallpaper/702/692/HD-wallpaper-gojo-satoru-jujutsu-kaisen.jpg') center/cover no-repeat;
+      height: 130px;
+      background: url('https://w0.peakpx.com/wallpaper/702/692/HD-wallpaper-gojo-satoru-jujutsu-kaisen.jpg') center/cover no-repeat,
+                  linear-gradient(135deg, #2b32b2, #1488cc);
     }
 
     .banner-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(20,20,28,0.8) 100%);
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(18, 19, 26, 0.95) 100%);
     }
 
-    /* Avatar Circle */
+    /* Avatar Gojo Satoru */
     .avatar-wrapper {
       position: relative;
-      width: 90px;
-      height: 90px;
-      margin: -45px auto 12px;
+      width: 86px;
+      height: 86px;
+      margin: -48px auto 14px;
+      border-radius: 50%;
+      padding: 2px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.2));
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
     }
 
     .avatar-img {
@@ -81,69 +73,77 @@
       height: 100%;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid rgba(255, 255, 255, 0.8);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      background: #222;
     }
 
     .status-badge {
       position: absolute;
-      top: 0;
-      right: 2px;
-      background: rgba(0, 0, 0, 0.7);
+      top: 0px;
+      right: 0px;
+      background: rgba(0, 0, 0, 0.85);
       color: #fff;
       font-size: 11px;
-      width: 20px;
-      height: 20px;
+      font-weight: bold;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(255,255,255,0.3);
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
     }
 
-    /* Main Name & Badges */
+    /* Tên DOKIDOKI */
     .title-name {
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: 2px;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
       color: #ffffff;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
     }
 
+    /* Các Tag Badges */
     .tags-wrapper {
       display: flex;
       justify-content: center;
-      gap: 8px;
-      margin-bottom: 10px;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
     }
 
     .tag {
       font-size: 11px;
-      padding: 3px 10px;
-      background: rgba(255, 255, 255, 0.1);
+      font-weight: 600;
+      padding: 4px 12px;
+      background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
-      color: #ccc;
+      border-radius: 20px;
+      color: #d1d5db;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .japanese-sub {
       font-size: 12px;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255, 255, 255, 0.55);
       margin-bottom: 20px;
+      letter-spacing: 0.5px;
     }
 
-    /* Inner Glass Card (KORNN Section) */
+    /* Khung KORNN màu sáng phía dưới */
     .inner-card {
       width: calc(100% - 32px);
       margin: 0 auto;
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(240, 242, 245, 0.92);
       color: #111;
-      border-radius: 16px;
-      padding: 16px 20px;
+      border-radius: 20px;
+      padding: 16px 18px;
       text-align: left;
       position: relative;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     }
 
     .inner-header {
@@ -154,15 +154,15 @@
     }
 
     .inner-icon {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       background: #111;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .inner-title-group h3 {
@@ -176,24 +176,28 @@
       font-size: 10px;
       font-weight: 700;
       color: #666;
-      margin-top: 2px;
+      margin-top: 3px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .inner-about {
-      font-size: 11px;
-      color: #777;
+      font-size: 10px;
+      color: #888;
       text-transform: uppercase;
       margin-bottom: 2px;
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
 
     .inner-bio {
       font-size: 13px;
-      font-weight: 700;
-      color: #222;
-      margin-bottom: 10px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 12px;
     }
 
     .inner-footer {
@@ -203,72 +207,66 @@
       text-transform: uppercase;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
     }
 
-    /* Media Play Button Overlay Effect */
+    /* Nút Play Tròn Mờ */
     .play-btn-overlay {
       position: absolute;
-      right: 25px;
+      right: 18px;
       top: 50%;
       transform: translateY(-50%);
-      width: 44px;
-      height: 44px;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(4px);
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(8px);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
-      font-size: 18px;
+      color: #ffffff;
+      font-size: 16px;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.5);
     }
 
-    /* Scroll Indicator Below */
+    /* Indicator cuộn phía dưới */
     .scroll-indicator {
-      margin-top: 20px;
+      margin-top: 22px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 10px;
+      gap: 5px;
+      color: rgba(255, 255, 255, 0.45);
+      font-size: 9px;
       letter-spacing: 2px;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .scroll-indicator i {
-      font-size: 12px;
-      animation: bounce 1.5s infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(5px); }
+      font-size: 11px;
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-overlay"></div>
-
   <div class="profile-card">
-    <!-- Header Banner -->
+    <!-- Banner -->
     <div class="banner-container">
       <div class="banner-overlay"></div>
     </div>
 
-    <!-- Avatar -->
+    <!-- Avatar Gojo -->
     <div class="avatar-wrapper">
-      <img src="https://i.pinimg.com/736x/21/d0/09/21d0092c483a9366d0344b1c1c7a23c3.jpg" alt="Avatar Gojo" class="avatar-img">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_x7J6-R6Y236-4-vY050720_a-4" alt="Gojo Avatar" class="avatar-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
       <div class="status-badge">?</div>
     </div>
 
-    <!-- Header Info -->
+    <!-- Tên DOKIDOKI -->
     <h1 class="title-name">DOKIDOKI</h1>
     
+    <!-- Các thẻ Badges -->
     <div class="tags-wrapper">
       <span class="tag"><i class="fa-solid fa-user-group"></i> REASONS</span>
       <span class="tag"><i class="fa-solid fa-shield-halved"></i> FUSIONS</span>
@@ -277,7 +275,7 @@
 
     <p class="japanese-sub">明日に会えることが難しい</p>
 
-    <!-- Inner Card (KORNN) -->
+    <!-- Khung KORNN -->
     <div class="inner-card">
       <div class="inner-header">
         <div class="inner-icon">
@@ -298,13 +296,13 @@
         <i class="fa-regular fa-clock"></i> JOINED 4 YEARS AGO
       </div>
 
-      <!-- Play Button Effect -->
+      <!-- Nút Play -->
       <div class="play-btn-overlay">
-        <i class="fa-solid fa-play" style="margin-left: 2px;"></i>
+        <i class="fa-solid fa-play" style="margin-left: 2px; color: rgba(255,255,255,0.9);"></i>
       </div>
     </div>
 
-    <!-- Scroll Footer -->
+    <!-- Scroll Indicator -->
     <div class="scroll-indicator">
       <i class="fa-solid fa-chart-simple"></i>
       <span>SCROLL</span>
