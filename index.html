@@ -89,7 +89,9 @@
     .np-title { font-size: 13px; font-weight: 700; color: #ffffff; overflow: hidden; text-overflow: ellipsis; }
     .np-subtitle { font-size: 11px; color: rgba(255, 255, 255, 0.45); margin-top: 1px; font-weight: 500; }
 
-    .np-controls { display: flex; align-items: center; gap: 10px; }
+    .np-controls { display: flex; align-items: center; gap: 12px; }
+    .play-btn { color: #ffffff; cursor: pointer; font-size: 15px; transition: transform 0.2s; }
+    .play-btn:hover { transform: scale(1.1); }
     .next-btn { color: rgba(255, 255, 255, 0.6); cursor: pointer; font-size: 14px; transition: color 0.2s; }
     .next-btn:hover { color: #ffffff; }
 
@@ -106,28 +108,7 @@
       50% { transform: scaleY(1); }
     }
 
-    .inner-card {
-      width: calc(100% - 32px); margin: 0 auto; background: rgba(240, 242, 245, 0.92); color: #111;
-      border-radius: 20px; padding: 16px 18px; text-align: left; position: relative; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    }
-    .inner-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-    .inner-icon { width: 38px; height: 38px; background: #111; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; }
-    .inner-title-group h3 { font-size: 15px; font-weight: 800; color: #000; letter-spacing: 0.5px; }
-    .inner-stats { font-size: 10px; font-weight: 700; color: #666; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px; }
-    .inner-about { font-size: 10px; color: #888; text-transform: uppercase; margin-bottom: 2px; font-weight: 700; letter-spacing: 0.5px; }
-    .inner-bio { font-size: 13px; font-weight: 800; color: #111; margin-bottom: 12px; }
-    .inner-footer { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; display: flex; align-items: center; gap: 5px; }
-
-    .play-btn-overlay {
-      position: absolute; right: 18px; top: 50%; transform: translateY(-50%); width: 48px; height: 48px;
-      background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(8px); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 16px; cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); border: 1px solid rgba(255, 255, 255, 0.5);
-      transition: all 0.2s ease;
-    }
-    .play-btn-overlay:hover { transform: translateY(-50%) scale(1.05); background: rgba(255, 255, 255, 0.85); }
-
-    .scroll-indicator { margin-top: 22px; display: flex; flex-direction: column; align-items: center; gap: 5px; color: rgba(255, 255, 255, 0.45); font-size: 9px; letter-spacing: 2px; font-weight: 800; }
+    .scroll-indicator { margin-top: 14px; display: flex; flex-direction: column; align-items: center; gap: 5px; color: rgba(255, 255, 255, 0.45); font-size: 9px; letter-spacing: 2px; font-weight: 800; }
     .scroll-indicator i { font-size: 11px; }
   </style>
 </head>
@@ -173,32 +154,13 @@
         </div>
       </div>
       <div class="np-controls">
+        <div id="play-btn" class="play-btn" title="Phát/Tạm dừng"><i id="play-icon" class="fa-solid fa-play"></i></div>
         <div id="next-btn" class="next-btn" title="Bài tiếp theo"><i class="fa-solid fa-forward-step"></i></div>
         <div id="wave-box" class="sound-wave paused">
           <span></span>
           <span></span>
           <span></span>
         </div>
-      </div>
-    </div>
-
-    <div class="inner-card">
-      <div class="inner-header">
-        <div class="inner-icon"><i class="fa-solid fa-mug-hot"></i></div>
-        <div class="inner-title-group">
-          <h3>KORNN</h3>
-          <div class="inner-stats"><i class="fa-solid fa-user-friends"></i> 100 FRIENDS &nbsp;»&nbsp; 11 FOLLOWERS</div>
-        </div>
-      </div>
-
-      <div class="inner-about">ABOUT</div>
-      <div class="inner-bio">HAHA</div>
-
-      <div class="inner-footer"><i class="fa-regular fa-clock"></i> JOINED 4 YEARS AGO</div>
-
-      <!-- NÚT PLAY/PAUSE -->
-      <div id="play-btn" class="play-btn-overlay">
-        <i id="play-icon" class="fa-solid fa-play" style="margin-left: 2px; color: rgba(255,255,255,0.9);"></i>
       </div>
     </div>
 
@@ -262,7 +224,6 @@
       if (!playlist.length) return;
       audio.play().then(() => {
         playIcon.className = "fa-solid fa-pause";
-        playIcon.style.marginLeft = "0px";
         waveBox.classList.remove('paused');
         npStatus.innerText = "Now playing";
       }).catch(err => console.log("Cần tương tác để phát nhạc:", err));
@@ -271,7 +232,6 @@
     function pauseAudio() {
       audio.pause();
       playIcon.className = "fa-solid fa-play";
-      playIcon.style.marginLeft = "2px";
       waveBox.classList.add('paused');
       npStatus.innerText = "Paused";
     }
@@ -348,7 +308,6 @@
       }
     }
 
-    // KHỞI CHẠY HÀM
     loadPlaylistFromGithub();
     updateDiscordData();
     setInterval(updateDiscordData, 10000);
