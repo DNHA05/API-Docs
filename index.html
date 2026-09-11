@@ -1,0 +1,2208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
+
+<meta name="theme-color" content="#05050d">
+
+<title>Discord Verification</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+
+    overflow-x: hidden;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    color: #fff;
+
+    background: #04040a;
+}
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root {
+
+    --blue: #5865f2;
+    --blue2: #7289ff;
+    --purple: #9147ff;
+    --violet: #b05cff;
+
+    --text: #ffffff;
+    --muted: rgba(220,224,255,.62);
+
+    --glass:
+        rgba(10,11,23,.48);
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.background {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -100;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(88,101,242,.14),
+            transparent 32%
+        ),
+
+        radial-gradient(
+            circle at 10% 80%,
+            rgba(90,60,255,.10),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(145,71,255,.10),
+            transparent 30%
+        ),
+
+        #04040a;
+}
+
+
+/* =========================================================
+   AURORA
+========================================================= */
+
+.aurora {
+
+    position: absolute;
+
+    width: 55vw;
+    height: 55vw;
+
+    min-width: 320px;
+    min-height: 320px;
+
+    max-width: 750px;
+    max-height: 750px;
+
+    border-radius: 50%;
+
+    filter: blur(100px);
+
+    opacity: .18;
+
+    mix-blend-mode: screen;
+
+    animation:
+        auroraFloat
+        18s
+        ease-in-out
+        infinite;
+}
+
+.aurora.a {
+
+    left: -20%;
+    top: -20%;
+
+    background:
+        radial-gradient(
+            circle,
+            #485cff,
+            transparent 70%
+        );
+}
+
+.aurora.b {
+
+    right: -20%;
+    bottom: -20%;
+
+    background:
+        radial-gradient(
+            circle,
+            #a348ff,
+            transparent 70%
+        );
+
+    animation-delay: -6s;
+}
+
+.aurora.c {
+
+    left: 35%;
+    top: 35%;
+
+    width: 300px;
+    height: 300px;
+
+    opacity: .09;
+
+    background:
+        radial-gradient(
+            circle,
+            #5865f2,
+            transparent 70%
+        );
+
+    animation-delay: -12s;
+}
+
+@keyframes auroraFloat {
+
+    0%,
+    100% {
+
+        transform:
+            translate3d(0,0,0)
+            scale(1);
+    }
+
+    25% {
+
+        transform:
+            translate3d(80px,40px,0)
+            scale(1.12);
+    }
+
+    50% {
+
+        transform:
+            translate3d(-50px,100px,0)
+            scale(.92);
+    }
+
+    75% {
+
+        transform:
+            translate3d(60px,-30px,0)
+            scale(1.08);
+    }
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.grid {
+
+    position: absolute;
+
+    inset: -100px;
+
+    opacity: .045;
+
+    background-image:
+
+        linear-gradient(
+            rgba(255,255,255,.15)
+            1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.15)
+            1px,
+            transparent 1px
+        );
+
+    background-size:
+        55px 55px;
+
+    transform:
+        perspective(600px)
+        rotateX(65deg)
+        translateY(100px);
+
+    mask-image:
+        radial-gradient(
+            ellipse at center,
+            black 10%,
+            transparent 70%
+        );
+
+    animation:
+        gridMove
+        20s
+        linear
+        infinite;
+}
+
+@keyframes gridMove {
+
+    from {
+        background-position:
+            0 0;
+    }
+
+    to {
+        background-position:
+            0 110px;
+    }
+}
+
+
+/* =========================================================
+   STARS
+========================================================= */
+
+#stars {
+
+    position: absolute;
+
+    inset: 0;
+}
+
+.star {
+
+    position: absolute;
+
+    width: 2px;
+    height: 2px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    box-shadow:
+        0 0 8px
+        rgba(150,170,255,.9);
+
+    animation:
+        starTwinkle
+        var(--duration)
+        ease-in-out
+        infinite;
+}
+
+@keyframes starTwinkle {
+
+    0%,
+    100% {
+
+        opacity: .08;
+
+        transform:
+            scale(.6);
+    }
+
+    50% {
+
+        opacity: .9;
+
+        transform:
+            scale(1.5);
+    }
+}
+
+
+/* =========================================================
+   SHOOTING STAR
+========================================================= */
+
+.shooting-star {
+
+    position: absolute;
+
+    width: 120px;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(150,165,255,.9),
+            transparent
+        );
+
+    transform:
+        rotate(-30deg);
+
+    opacity: 0;
+
+    animation:
+        shooting
+        7s
+        linear
+        infinite;
+}
+
+.shooting-star:nth-child(1) {
+    top: 20%;
+    left: -20%;
+    animation-delay: 1s;
+}
+
+.shooting-star:nth-child(2) {
+    top: 38%;
+    left: -20%;
+    animation-delay: 4s;
+}
+
+@keyframes shooting {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateX(0)
+            translateY(0)
+            rotate(-30deg);
+    }
+
+    8% {
+
+        opacity: .8;
+    }
+
+    20% {
+
+        opacity: 0;
+
+        transform:
+            translateX(110vw)
+            translateY(55vh)
+            rotate(-30deg);
+    }
+
+    100% {
+
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   NOISE
+========================================================= */
+
+.noise {
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: .025;
+
+    pointer-events: none;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+}
+
+
+/* =========================================================
+   TOP BRAND
+========================================================= */
+
+.brand {
+
+    position: fixed;
+
+    top: 25px;
+    left: 25px;
+
+    z-index: 50;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    animation:
+        brandIn
+        .8s
+        cubic-bezier(.16,1,.3,1)
+        both;
+}
+
+.brand-icon {
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    font-size: 21px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(88,101,242,.28),
+            rgba(145,71,255,.18)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255,255,255,.10),
+
+        0 0 30px
+        rgba(88,101,242,.14);
+}
+
+.brand-name {
+
+    font-size: 18px;
+
+    font-weight: 750;
+
+    letter-spacing: -.4px;
+}
+
+@keyframes brandIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(-15px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding:
+        100px 20px
+        100px;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
+
+    width: 100%;
+
+    max-width: 680px;
+
+    text-align: center;
+
+    animation:
+        contentIn
+        1.2s
+        cubic-bezier(.16,1,.3,1)
+        both;
+}
+
+@keyframes contentIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(35px)
+            scale(.94);
+
+        filter:
+            blur(12px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+        filter:
+            blur(0);
+    }
+}
+
+
+/* =========================================================
+   ORB
+========================================================= */
+
+.orb-container {
+
+    position: relative;
+
+    width: 210px;
+    height: 210px;
+
+    margin:
+        0 auto 25px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+}
+
+
+/* energy rings */
+
+.energy {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(110,125,255,.28);
+
+    pointer-events: none;
+}
+
+.energy.one {
+
+    width: 125px;
+    height: 125px;
+
+    animation:
+        energyPulse
+        3s
+        .2s
+        infinite;
+}
+
+.energy.two {
+
+    width: 160px;
+    height: 160px;
+
+    animation:
+        energyPulse
+        3s
+        .8s
+        infinite;
+}
+
+.energy.three {
+
+    width: 200px;
+    height: 200px;
+
+    animation:
+        energyPulse
+        3s
+        1.4s
+        infinite;
+}
+
+@keyframes energyPulse {
+
+    0% {
+
+        opacity: .7;
+
+        transform:
+            scale(.65)
+            rotate(0deg);
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            scale(1)
+            rotate(180deg);
+    }
+}
+
+
+/* orbit */
+
+.orbit {
+
+    position: absolute;
+
+    width: 175px;
+    height: 72px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(126,137,255,.30);
+
+    transform:
+        rotate(-24deg);
+
+    box-shadow:
+        0 0 20px
+        rgba(88,101,242,.10);
+
+    animation:
+        orbitRotate
+        7s
+        linear
+        infinite;
+}
+
+.orbit::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 7px;
+    height: 7px;
+
+    top: -3px;
+    left: 50%;
+
+    border-radius: 50%;
+
+    background:
+        #aeb7ff;
+
+    box-shadow:
+        0 0 15px
+        #7180ff;
+}
+
+@keyframes orbitRotate {
+
+    to {
+
+        transform:
+            rotate(336deg);
+    }
+}
+
+
+/* orb */
+
+.orb {
+
+    position: relative;
+
+    width: 108px;
+    height: 108px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius: 34px;
+
+    background:
+
+        radial-gradient(
+            circle at 30% 20%,
+            rgba(255,255,255,.25),
+            transparent 28%
+        ),
+
+        linear-gradient(
+            145deg,
+            #536aff,
+            #674ff5 48%,
+            #9a4cff
+        );
+
+    box-shadow:
+
+        inset 0 1px 1px
+        rgba(255,255,255,.35),
+
+        inset 0 -12px 30px
+        rgba(30,20,100,.28),
+
+        0 15px 45px
+        rgba(88,101,242,.38),
+
+        0 0 90px
+        rgba(88,101,242,.18);
+
+    animation:
+        orbFloat
+        4s
+        ease-in-out
+        infinite,
+
+        orbAppear
+        .9s
+        .25s
+        cubic-bezier(.16,1,.3,1)
+        both;
+
+    overflow: hidden;
+}
+
+.orb::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 1px;
+
+    border-radius: 33px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.20);
+}
+
+.orb::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 180%;
+
+    height: 50%;
+
+    top: -30%;
+    left: -40%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.25),
+            transparent
+        );
+
+    transform:
+        rotate(-30deg);
+
+    animation:
+        orbShine
+        4s
+        1s
+        infinite;
+}
+
+@keyframes orbFloat {
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0)
+            rotate(0deg);
+    }
+
+    50% {
+
+        transform:
+            translateY(-9px)
+            rotate(2deg);
+    }
+}
+
+@keyframes orbAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            scale(.25)
+            rotate(-25deg);
+
+        filter:
+            blur(15px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            scale(1)
+            rotate(0);
+
+        filter:
+            blur(0);
+    }
+}
+
+@keyframes orbShine {
+
+    0%,
+    50% {
+
+        transform:
+            translateX(-80%)
+            rotate(-30deg);
+    }
+
+    75%,
+    100% {
+
+        transform:
+            translateX(100%)
+            rotate(-30deg);
+    }
+}
+
+
+/* =========================================================
+   DISCORD LOGO
+========================================================= */
+
+.discord-logo {
+
+    position: relative;
+
+    width: 58px;
+    height: 44px;
+
+    z-index: 2;
+
+    border-radius:
+        19px
+        19px
+        17px
+        17px;
+
+    background: white;
+
+    filter:
+        drop-shadow(
+            0 5px 10px
+            rgba(0,0,0,.18)
+        );
+}
+
+.discord-logo::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 9px;
+    height: 9px;
+
+    left: 13px;
+    top: 15px;
+
+    border-radius: 50%;
+
+    background:
+        #5f65ed;
+
+    box-shadow:
+        23px 0 0
+        #5f65ed;
+}
+
+.discord-logo::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 27px;
+    height: 8px;
+
+    left: 15px;
+    bottom: -3px;
+
+    border-radius:
+        0 0 15px 15px;
+
+    background: white;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.title {
+
+    font-size:
+        clamp(
+            38px,
+            9vw,
+            68px
+        );
+
+    line-height: 1.02;
+
+    font-weight: 900;
+
+    letter-spacing:
+        -3px;
+
+    margin-bottom: 19px;
+
+    background:
+
+        linear-gradient(
+            100deg,
+
+            #ffffff 0%,
+            #ffffff 25%,
+
+            #8c9cff 42%,
+
+            #a75cff 60%,
+
+            #ffffff 80%,
+
+            #ffffff 100%
+        );
+
+    background-size:
+        300% 100%;
+
+    -webkit-background-clip:
+        text;
+
+    background-clip:
+        text;
+
+    -webkit-text-fill-color:
+        transparent;
+
+    animation:
+
+        titleIn
+        .9s
+        .45s
+        both,
+
+        titleGradient
+        7s
+        1.5s
+        linear
+        infinite;
+}
+
+@keyframes titleIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(20px)
+            scale(.97);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+@keyframes titleGradient {
+
+    from {
+
+        background-position:
+            0% 50%;
+    }
+
+    to {
+
+        background-position:
+            300% 50%;
+    }
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.description {
+
+    max-width: 520px;
+
+    margin:
+        0 auto 31px;
+
+    color:
+        rgba(213,218,245,.62);
+
+    font-size:
+        clamp(
+            15px,
+            4vw,
+            18px
+        );
+
+    line-height:
+        1.7;
+
+    animation:
+        fadeUp
+        .8s
+        .65s
+        both;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.login-button {
+
+    position: relative;
+
+    width:
+        min(
+            100%,
+            510px
+        );
+
+    min-height: 66px;
+
+    margin: 0 auto;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap: 14px;
+
+    border-radius: 20px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    font-weight: 800;
+
+    letter-spacing: -.2px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    background:
+
+        linear-gradient(
+            105deg,
+
+            #536aff,
+            #6855f5,
+            #8b4ff4,
+            #536aff
+        );
+
+    background-size:
+        300% 100%;
+
+    box-shadow:
+
+        0 15px 45px
+        rgba(88,101,242,.27),
+
+        inset 0 1px 0
+        rgba(255,255,255,.25),
+
+        inset 0 -1px 0
+        rgba(0,0,0,.15);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+
+    animation:
+
+        buttonIn
+        .9s
+        .85s
+        cubic-bezier(.16,1,.3,1)
+        both,
+
+        buttonGradient
+        5s
+        1.6s
+        linear
+        infinite;
+}
+
+.login-button:hover {
+
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+
+        0 22px 65px
+        rgba(88,101,242,.42),
+
+        inset 0 1px 0
+        rgba(255,255,255,.28);
+}
+
+.login-button:active {
+
+    transform:
+        scale(.97);
+}
+
+
+/* button shine */
+
+.login-button::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 60%;
+    height: 180%;
+
+    left: -100%;
+    top: -40%;
+
+    transform:
+        rotate(18deg);
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.30),
+            transparent
+        );
+
+    animation:
+        buttonShine
+        4s
+        2s
+        infinite;
+}
+
+@keyframes buttonIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(20px)
+            scale(.94);
+
+        filter:
+            blur(8px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+        filter:
+            blur(0);
+    }
+}
+
+@keyframes buttonGradient {
+
+    from {
+
+        background-position:
+            0% 50%;
+    }
+
+    to {
+
+        background-position:
+            300% 50%;
+    }
+}
+
+@keyframes buttonShine {
+
+    0%,
+    55% {
+
+        left: -100%;
+    }
+
+    80%,
+    100% {
+
+        left: 150%;
+    }
+}
+
+
+/* =========================================================
+   BUTTON DISCORD ICON
+========================================================= */
+
+.discord-small {
+
+    position: relative;
+
+    width: 27px;
+    height: 21px;
+
+    border-radius: 9px;
+
+    background: white;
+
+    flex-shrink: 0;
+}
+
+.discord-small::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 6px;
+    top: 7px;
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background:
+        #6269ed;
+
+    box-shadow:
+        10px 0 0
+        #6269ed;
+}
+
+
+/* =========================================================
+   ARROW
+========================================================= */
+
+.arrow {
+
+    position: absolute;
+
+    right: 21px;
+
+    font-size: 23px;
+
+    opacity: .85;
+
+    transition:
+        transform .25s ease;
+}
+
+.login-button:hover
+.arrow {
+
+    transform:
+        translateX(6px);
+}
+
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+.security {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap: 8px;
+
+    margin-top: 19px;
+
+    color:
+        rgba(184,190,220,.50);
+
+    font-size: 11px;
+
+    animation:
+        fadeUp
+        .8s
+        1s
+        both;
+}
+
+.lock {
+
+    width: 20px;
+    height: 20px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius: 7px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+
+/* =========================================================
+   TRUST
+========================================================= */
+
+.trust {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    gap: 12px;
+
+    margin-top: 23px;
+
+    animation:
+        fadeUp
+        .8s
+        1.15s
+        both;
+}
+
+.trust-card {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap: 8px;
+
+    padding:
+        9px 13px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid
+        rgba(255,255,255,.065);
+
+    color:
+        rgba(205,210,235,.52);
+
+    font-size: 10px;
+
+    transition:
+        background .25s,
+        border .25s,
+        transform .25s;
+}
+
+.trust-card:hover {
+
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(255,255,255,.05);
+
+    border-color:
+        rgba(130,140,255,.18);
+}
+
+.trust-icon {
+
+    width: 22px;
+    height: 22px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius: 7px;
+
+    color:
+        #8c99ff;
+
+    background:
+        rgba(88,101,242,.10);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+
+    position: fixed;
+
+    bottom: 18px;
+
+    left: 0;
+    right: 0;
+
+    text-align: center;
+
+    color:
+        rgba(170,176,210,.32);
+
+    font-size: 10px;
+
+    letter-spacing: .3px;
+
+    animation:
+        fadeUp
+        .8s
+        1.3s
+        both;
+}
+
+.footer-line {
+
+    display:
+        inline-block;
+
+    width: 40px;
+
+    height: 1px;
+
+    margin:
+        0 9px;
+
+    vertical-align:
+        middle;
+
+    background:
+        rgba(150,160,220,.18);
+}
+
+
+/* =========================================================
+   COMMON ANIMATION
+========================================================= */
+
+@keyframes fadeUp {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(14px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .brand {
+
+        top: 18px;
+        left: 18px;
+    }
+
+    .brand-icon {
+
+        width: 37px;
+        height: 37px;
+
+        border-radius: 11px;
+    }
+
+    .brand-name {
+
+        font-size: 16px;
+    }
+
+    main {
+
+        padding:
+            90px 18px
+            75px;
+    }
+
+    .orb-container {
+
+        width: 180px;
+        height: 180px;
+
+        margin-bottom: 20px;
+    }
+
+    .orb {
+
+        width: 94px;
+        height: 94px;
+
+        border-radius: 30px;
+    }
+
+    .discord-logo {
+
+        transform:
+            scale(.9);
+    }
+
+    .title {
+
+        font-size:
+            clamp(
+                38px,
+                10vw,
+                52px
+            );
+
+        letter-spacing:
+            -2.2px;
+    }
+
+    .description {
+
+        max-width: 350px;
+
+        font-size: 14px;
+    }
+
+    .login-button {
+
+        min-height: 59px;
+
+        border-radius: 17px;
+
+        font-size: 15px;
+    }
+
+    .trust {
+
+        gap: 7px;
+    }
+
+    .trust-card {
+
+        padding:
+            8px 9px;
+
+        font-size: 9px;
+    }
+
+    .footer {
+
+        bottom: 12px;
+    }
+}
+
+
+/* =========================================================
+   SHORT SCREEN
+========================================================= */
+
+@media (max-height: 700px) {
+
+    main {
+
+        padding-top: 75px;
+        padding-bottom: 60px;
+    }
+
+    .orb-container {
+
+        transform:
+            scale(.78);
+
+        margin:
+            -18px auto -2px;
+    }
+
+    .title {
+
+        font-size: 38px;
+
+        margin-bottom: 12px;
+    }
+
+    .description {
+
+        margin-bottom: 18px;
+    }
+
+    .trust {
+
+        margin-top: 15px;
+    }
+}
+
+
+/* =========================================================
+   REDUCE MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+            .01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        scroll-behavior:
+            auto !important;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     BACKGROUND
+======================================================= -->
+
+<div class="background">
+
+    <div class="aurora a"></div>
+    <div class="aurora b"></div>
+    <div class="aurora c"></div>
+
+    <div class="grid"></div>
+
+    <div id="stars"></div>
+
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+
+    <div class="noise"></div>
+
+</div>
+
+
+<!-- =======================================================
+     BRAND
+======================================================= -->
+
+<div class="brand">
+
+    <div class="brand-icon">
+        ◉
+    </div>
+
+    <div class="brand-name">
+        Discord
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     MAIN
+======================================================= -->
+
+<main>
+
+<div class="content">
+
+
+    <!-- =================================================
+         ORB
+    ================================================== -->
+
+    <div class="orb-container">
+
+        <div class="energy one"></div>
+
+        <div class="energy two"></div>
+
+        <div class="energy three"></div>
+
+        <div class="orbit"></div>
+
+        <div class="orb">
+
+            <div class="discord-logo"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         TITLE
+    ================================================== -->
+
+    <h1 class="title">
+        Xác minh Discord
+    </h1>
+
+
+    <!-- =================================================
+         DESCRIPTION
+    ================================================== -->
+
+    <p class="description">
+
+        Kết nối tài khoản Discord của bạn
+        để tiếp tục xác minh và nhận quyền
+        truy cập.
+
+    </p>
+
+
+    <!-- =================================================
+         LOGIN BUTTON
+    ================================================== -->
+
+    <!--
+        Nếu backend OAuth2 nằm cùng domain:
+        /auth
+
+        Nếu backend nằm ở Replit/VPS:
+        đổi href thành URL /auth của backend.
+    -->
+
+    <a
+        href="/auth"
+        class="login-button"
+        id="loginButton"
+    >
+
+        <div class="discord-small"></div>
+
+        <span>
+            Tiếp tục với Discord
+        </span>
+
+        <span class="arrow">
+            →
+        </span>
+
+    </a>
+
+
+    <!-- =================================================
+         SECURITY
+    ================================================== -->
+
+    <div class="security">
+
+        <span class="lock">
+            🔒
+        </span>
+
+        <span>
+            Discord Verification
+        </span>
+
+        <span>•</span>
+
+        <span>
+            Secure OAuth2
+        </span>
+
+    </div>
+
+
+    <!-- =================================================
+         TRUST
+    ================================================== -->
+
+    <div class="trust">
+
+        <div class="trust-card">
+
+            <div class="trust-icon">
+                ✓
+            </div>
+
+            <span>
+                An toàn
+            </span>
+
+        </div>
+
+
+        <div class="trust-card">
+
+            <div class="trust-icon">
+                ◇
+            </div>
+
+            <span>
+                Không lưu mật khẩu
+            </span>
+
+        </div>
+
+
+        <div class="trust-card">
+
+            <div class="trust-icon">
+                ♢
+            </div>
+
+            <span>
+                OAuth2
+            </span>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+</main>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer class="footer">
+
+    <span class="footer-line"></span>
+
+    Discord Verification
+
+    <span class="footer-line"></span>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   CREATE STARS
+========================================================= */
+
+const stars =
+    document.getElementById("stars");
+
+
+for (
+    let i = 0;
+    i < 100;
+    i++
+) {
+
+    const star =
+        document.createElement("div");
+
+    star.className =
+        "star";
+
+    star.style.left =
+        Math.random() * 100 + "%";
+
+    star.style.top =
+        Math.random() * 100 + "%";
+
+    const size =
+        Math.random() < .85
+            ? 1
+            : 2.5;
+
+    star.style.width =
+        size + "px";
+
+    star.style.height =
+        size + "px";
+
+    star.style.setProperty(
+        "--duration",
+        (2 + Math.random() * 5) + "s"
+    );
+
+    star.style.animationDelay =
+        (-Math.random() * 5) + "s";
+
+    stars.appendChild(star);
+}
+
+
+/* =========================================================
+   TOUCH / MOUSE GLOW
+========================================================= */
+
+const glow =
+    document.createElement("div");
+
+glow.style.position =
+    "fixed";
+
+glow.style.width =
+    "260px";
+
+glow.style.height =
+    "260px";
+
+glow.style.borderRadius =
+    "50%";
+
+glow.style.pointerEvents =
+    "none";
+
+glow.style.zIndex =
+    "-1";
+
+glow.style.background =
+    "radial-gradient(circle, rgba(88,101,242,.12), transparent 70%)";
+
+glow.style.transform =
+    "translate(-50%, -50%)";
+
+glow.style.opacity =
+    "0";
+
+glow.style.transition =
+    "opacity .3s ease";
+
+document.body.appendChild(glow);
+
+
+function moveGlow(x, y) {
+
+    glow.style.left =
+        x + "px";
+
+    glow.style.top =
+        y + "px";
+
+    glow.style.opacity =
+        "1";
+}
+
+
+document.addEventListener(
+    "mousemove",
+    event => {
+
+        moveGlow(
+            event.clientX,
+            event.clientY
+        );
+
+    }
+);
+
+
+document.addEventListener(
+    "touchmove",
+    event => {
+
+        const touch =
+            event.touches[0];
+
+        if (!touch) return;
+
+        moveGlow(
+            touch.clientX,
+            touch.clientY
+        );
+
+    },
+    {
+        passive: true
+    }
+);
+
+
+document.addEventListener(
+    "mouseleave",
+    () => {
+
+        glow.style.opacity =
+            "0";
+
+    }
+);
+
+
+/* =========================================================
+   BUTTON PRESS EFFECT
+========================================================= */
+
+const loginButton =
+    document.getElementById(
+        "loginButton"
+    );
+
+
+loginButton.addEventListener(
+    "pointerdown",
+    () => {
+
+        loginButton.style
+            .transition =
+            "transform .12s ease";
+
+        loginButton.style
+            .transform =
+            "scale(.965)";
+
+    }
+);
+
+
+loginButton.addEventListener(
+    "pointerup",
+    () => {
+
+        loginButton.style
+            .transform =
+            "";
+
+    }
+);
+
+
+loginButton.addEventListener(
+    "pointercancel",
+    () => {
+
+        loginButton.style
+            .transform =
+            "";
+
+    }
+);
+
+</script>
+
+
+</body>
+</html>
