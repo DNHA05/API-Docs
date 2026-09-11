@@ -22,13 +22,12 @@
     }
     .banner-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(18,19,26,0.95) 100%); }
 
-    /* AVATAR SẠCH SẼ - KHÔNG VIỀN TÍM HOẠT HỌA */
+    /* AVATAR DECORATION FIT */
     .avatar-wrapper {
       position: relative; width: 86px; height: 86px; margin: -48px auto 14px;
       border-radius: 50%;
     }
 
-    /* KHUNG DECORATION DISCORD TỰ ĐỘNG KHÍT VỚI AVATAR */
     .avatar-decoration {
       position: absolute;
       top: -10px; left: -10px;
@@ -50,16 +49,16 @@
     .status-offline { background-color: #747f8d; }
 
     .username-container { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; }
-    .title-name { font-size: 22px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: #ffffff; }
+    
+    /* HIỂN THỊ TÊN NGUYÊN BẢN (KHÔNG ÉP VIẾT HOA ALL) */
+    .title-name { font-size: 22px; font-weight: 800; letter-spacing: 0.5px; color: #ffffff; }
 
-    /* GUILD TAG DISCORD */
     .guild-tag {
       background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15);
       color: #5865f2; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px;
       display: inline-flex; align-items: center; gap: 4px;
     }
 
-    /* KHUNG HUY HIỆU BADGES */
     .badges-container {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
       background: rgba(0, 0, 0, 0.25); padding: 4px 10px; border-radius: 10px;
@@ -101,7 +100,6 @@
       <div class="banner-overlay"></div>
     </div>
 
-    <!-- AVATAR KHÔNG CÓ VIỀN TÍM -->
     <div class="avatar-wrapper">
       <img id="avatar-deco" class="avatar-decoration" style="display: none;" alt="Deco">
       <img id="discord-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar" class="avatar-img">
@@ -109,13 +107,12 @@
     </div>
 
     <div class="username-container">
-      <h1 id="discord-username" class="title-name">LOADING...</h1>
+      <h1 id="discord-username" class="title-name">Loading...</h1>
       <span id="guild-tag" class="guild-tag" style="display: none;">
         <i class="fa-solid fa-shield-cat"></i> <span id="guild-name"></span>
       </span>
     </div>
 
-    <!-- BADGES SỬA KHÔNG CÒN LỖI DẤU HỎI -->
     <div id="badges-box" class="badges-container" style="display: none;"></div>
     
     <div class="tags-wrapper">
@@ -172,19 +169,17 @@
           const data = result.data;
           const user = data.discord_user;
 
-          // 1. Tên
+          // Hiển thị chính xác tên gốc trên Discord
           const nameToDisplay = user.global_name || user.username;
-          nameElem.innerText = nameToDisplay.toUpperCase();
+          nameElem.innerText = nameToDisplay;
           document.title = `${nameToDisplay} - Profile`;
 
-          // 2. Avatar
           if (user.avatar) {
             const isGif = user.avatar.startsWith('a_');
             const ext = isGif ? 'gif' : 'png';
             avatarElem.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=256`;
           }
 
-          // 3. Khung trang trí Avatar (Deco)
           if (user.avatar_decoration_data) {
             const decoHash = user.avatar_decoration_data.asset;
             decoElem.src = `https://cdn.discordapp.com/avatar-decoration-presets/${decoHash}.png`;
@@ -193,7 +188,6 @@
             decoElem.style.display = 'none';
           }
 
-          // 4. Guild / Clan Tag
           if (data.clan && data.clan.tag) {
             guildNameElem.innerText = data.clan.tag;
             guildTagElem.style.display = 'inline-flex';
@@ -201,31 +195,8 @@
             guildTagElem.style.display = 'none';
           }
 
-          // 5. Trạng thái Online
           statusDot.className = 'status-badge';
           statusDot.classList.add(`status-${data.discord_status}`);
-
-          // 6. Tải Huy hiệu thật từ Discord
-          if (user.public_flags) {
-            badgesBox.innerHTML = '';
-            // Load tự động từ CDN Discord Badges
-            const badgeList = [];
-            if ((user.public_flags & 1) === 1) badgeList.push('staff');
-            if ((user.public_flags & 2) === 2) badgeList.push('partner');
-            if ((user.public_flags & 64) === 64) badgeList.push('hypesquad_bravery');
-            if ((user.public_flags & 128) === 128) badgeList.push('hypesquad_brilliance');
-            if ((user.public_flags & 256) === 256) badgeList.push('hypesquad_balance');
-            if ((user.public_flags & 4194304) === 4194304) badgeList.push('active_developer');
-
-            if (badgeList.length > 0) {
-              badgeList.forEach(b => {
-                badgesBox.innerHTML += `<img class="badge-icon" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f3c5.png">`;
-              });
-              badgesBox.style.display = 'inline-flex';
-            } else {
-              badgesBox.style.display = 'none';
-            }
-          }
         }
       } catch (err) {
         console.error("Lỗi:", err);
