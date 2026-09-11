@@ -16,11 +16,12 @@
       box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7); text-align: center; padding-bottom: 24px;
     }
 
+    /* ĐÃ TĂNG CHIỀU CAO BANNER LÊN 220PX ĐỂ HIỂN THỊ TO TOÀN BỘ HỌA TIẾT */
     .banner-container {
-      position: relative; width: 100%; height: 130px;
-      background: url('https://i.ibb.co/xKYtnm2V/IMG-4277.jpg') center/cover no-repeat;
+      position: relative; width: 100%; height: 220px;
+      background: url('https://i.ibb.co/3k5fH4L/womb-tattoo.jpg') center center / cover no-repeat;
     }
-    .banner-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(18,19,26,0.95) 100%); }
+    .banner-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(18,19,26,0.95) 100%); }
 
     /* AVATAR DECORATION FIT */
     .avatar-wrapper {
@@ -49,8 +50,6 @@
     .status-offline { background-color: #747f8d; }
 
     .username-container { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; }
-    
-    /* HIỂN THỊ TÊN NGUYÊN BẢN (KHÔNG ÉP VIẾT HOA ALL) */
     .title-name { font-size: 22px; font-weight: 800; letter-spacing: 0.5px; color: #ffffff; }
 
     .guild-tag {
@@ -169,7 +168,6 @@
           const data = result.data;
           const user = data.discord_user;
 
-          // Hiển thị chính xác tên gốc trên Discord
           const nameToDisplay = user.global_name || user.username;
           nameElem.innerText = nameToDisplay;
           document.title = `${nameToDisplay} - Profile`;
