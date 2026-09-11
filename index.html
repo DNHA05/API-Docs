@@ -1,698 +1,316 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>HARBLX — Profile</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --text: #fff;
-    --muted: #b9b9c8;
-    --glass: rgba(15, 15, 25, .48);
-    --border: rgba(255,255,255,.18);
-}
-
-html, body {
-    width: 100%;
-    min-height: 100%;
-    font-family: Inter, sans-serif;
-    color: var(--text);
-    overflow-x: hidden;
-}
-
-/* ================= BACKGROUND ================= */
-
-body {
-    background: #070711;
-}
-
-.background {
-    position: fixed;
-    inset: 0;
-    z-index: -5;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(36, 17, 91, .7),
-            rgba(111, 28, 148, .38),
-            rgba(20, 45, 105, .65)
-        ),
-        url("https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=2400&q=90");
-
-    background-size: cover;
-    background-position: center;
-
-    filter: saturate(1.3);
-    transform: scale(1.08);
-}
-
-.background::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background:
-        radial-gradient(
-            circle at 50% 35%,
-            rgba(168, 92, 255, .3),
-            transparent 35%
-        ),
-        linear-gradient(
-            rgba(0,0,0,.18),
-            rgba(0,0,0,.62)
-        );
-
-    backdrop-filter: blur(4px);
-}
-
-/* ================= LIGHTS ================= */
-
-.light {
-    position: fixed;
-    width: 350px;
-    height: 350px;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: .3;
-    z-index: -3;
-    animation: float 8s ease-in-out infinite;
-}
-
-.light.one {
-    background: #713cff;
-    top: 5%;
-    left: -100px;
-}
-
-.light.two {
-    background: #e83cff;
-    bottom: -100px;
-    right: -80px;
-    animation-delay: -3s;
-}
-
-@keyframes float {
-    0%,100% {
-        transform: translateY(0) scale(1);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gojo Satoru - Bio Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
-    50% {
-        transform: translateY(-40px) scale(1.08);
-    }
-}
-
-/* ================= PAGE ================= */
-
-.page {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 18px;
-}
-
-/* ================= CARD ================= */
-
-.profile {
-    width: min(430px, 100%);
-    padding: 34px 27px 27px;
-
-    position: relative;
-
-    background: var(--glass);
-    border: 1px solid var(--border);
-    border-radius: 30px;
-
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
-
-    box-shadow:
-        0 30px 100px rgba(0,0,0,.55),
-        inset 0 1px rgba(255,255,255,.1);
-
-    overflow: hidden;
-
-    animation: cardIn .9s cubic-bezier(.2,.8,.2,1);
-}
-
-@keyframes cardIn {
-    from {
-        opacity: 0;
-        transform: translateY(40px) scale(.94);
+    body {
+      background-color: #0b0c10;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* rotating border glow */
-
-.profile::before {
-    content: "";
-    position: absolute;
-    inset: -2px;
-
-    background: conic-gradient(
-        transparent,
-        rgba(151,95,255,.7),
-        transparent,
-        rgba(255,75,219,.6),
-        transparent
-    );
-
-    animation: rotate 7s linear infinite;
-    z-index: -2;
-}
-
-.profile::after {
-    content: "";
-    position: absolute;
-    inset: 1px;
-    background: rgba(10,10,18,.82);
-    border-radius: 29px;
-    z-index: -1;
-}
-
-@keyframes rotate {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/* ================= AVATAR ================= */
-
-.avatar-wrap {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 18px;
-}
-
-.avatar-ring {
-    width: 105px;
-    height: 105px;
-    padding: 4px;
-
-    border-radius: 50%;
-
-    background: conic-gradient(
-        #9c6cff,
-        #ff4bd8,
-        #53b8ff,
-        #9c6cff
-    );
-
-    animation: avatarSpin 6s linear infinite;
-
-    box-shadow:
-        0 0 35px rgba(151,95,255,.55);
-}
-
-@keyframes avatarSpin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.avatar {
-    width: 100%;
-    height: 100%;
-
-    border-radius: 50%;
-    object-fit: cover;
-
-    border: 4px solid #11111a;
-
-    animation: avatarReverse 6s linear infinite;
-}
-
-@keyframes avatarReverse {
-    to {
-        transform: rotate(-360deg);
-    }
-}
-
-/* ================= NAME ================= */
-
-.name {
-    text-align: center;
-    font-size: 29px;
-    font-weight: 800;
-    letter-spacing: -.8px;
-
-    background: linear-gradient(
-        90deg,
-        #fff,
-        #b894ff,
-        #ff8be9,
-        #fff
-    );
-
-    background-size: 250%;
-    -webkit-background-clip: text;
-    color: transparent;
-
-    animation: rgbText 5s linear infinite;
-}
-
-@keyframes rgbText {
-    to {
-        background-position: 250%;
-    }
-}
-
-.username {
-    text-align: center;
-    margin-top: 5px;
-
-    color: #aaaabd;
-    font-size: 13px;
-}
-
-/* ================= STATUS ================= */
-
-.status {
-    width: max-content;
-    margin: 15px auto 20px;
-
-    padding: 7px 13px;
-
-    display: flex;
-    align-items: center;
-    gap: 7px;
-
-    border-radius: 999px;
-
-    background: rgba(255,255,255,.07);
-    border: 1px solid rgba(255,255,255,.1);
-
-    color: #ddd;
-    font-size: 12px;
-}
-
-.status-dot {
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-    background: #65ff9b;
-
-    box-shadow: 0 0 12px #65ff9b;
-
-    animation: pulse 1.6s infinite;
-}
-
-@keyframes pulse {
-    50% {
-        transform: scale(1.4);
-        opacity: .5;
-    }
-}
-
-/* ================= BIO ================= */
-
-.bio {
-    text-align: center;
-    color: #c6c6d2;
-
-    font-size: 13px;
-    line-height: 1.7;
-
-    margin-bottom: 23px;
-}
-
-/* ================= STATS ================= */
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 9px;
-
-    margin-bottom: 20px;
-}
-
-.stat {
-    padding: 13px 5px;
-
-    text-align: center;
-
-    background: rgba(255,255,255,.045);
-    border: 1px solid rgba(255,255,255,.08);
-
-    border-radius: 15px;
-
-    transition: .3s;
-}
-
-.stat:hover {
-    transform: translateY(-3px);
-    background: rgba(255,255,255,.09);
-}
-
-.stat strong {
-    display: block;
-    font-size: 15px;
-}
-
-.stat span {
-    display: block;
-    margin-top: 4px;
-
-    color: #88889a;
-    font-size: 10px;
-}
-
-/* ================= LINKS ================= */
-
-.links {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.link {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-
-    min-height: 57px;
-    padding: 0 16px;
-
-    color: white;
-    text-decoration: none;
-
-    border-radius: 16px;
-
-    background: rgba(255,255,255,.055);
-    border: 1px solid rgba(255,255,255,.09);
-
-    overflow: hidden;
-
-    transition:
-        transform .3s,
-        background .3s,
-        border .3s;
-}
-
-.link::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.09),
-        transparent
-    );
-
-    transform: translateX(-100%);
-    transition: .5s;
-}
-
-.link:hover::before {
-    transform: translateX(100%);
-}
-
-.link:hover {
-    transform: translateY(-3px);
-    background: rgba(255,255,255,.09);
-    border-color: rgba(173,132,255,.45);
-
-    box-shadow:
-        0 10px 30px rgba(80,30,160,.18);
-}
-
-.icon {
-    width: 34px;
-    height: 34px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    border-radius: 10px;
-
-    background: rgba(255,255,255,.08);
-
-    font-size: 16px;
-}
-
-.link-info {
-    margin-left: 12px;
-}
-
-.link-title {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.link-sub {
-    display: block;
-
-    margin-top: 2px;
-
-    color: #888899;
-    font-size: 10px;
-}
-
-.arrow {
-    margin-left: auto;
-    color: #777789;
-    transition: .3s;
-}
-
-.link:hover .arrow {
-    color: white;
-    transform: translateX(4px);
-}
-
-/* ================= FOOTER ================= */
-
-.footer {
-    text-align: center;
-    margin-top: 22px;
-
-    color: #666678;
-    font-size: 10px;
-}
-
-.footer span {
-    color: #a989ff;
-}
-
-/* ================= PARTICLES ================= */
-
-.particle {
-    position: fixed;
-
-    width: 3px;
-    height: 3px;
-
-    border-radius: 50%;
-
-    background: white;
-
-    opacity: .5;
-
-    box-shadow: 0 0 10px white;
-
-    animation: particleMove linear infinite;
-
-    z-index: -1;
-}
-
-@keyframes particleMove {
-    from {
-        transform: translateY(110vh);
-        opacity: 0;
+    /* Background Anime / Gojo Satoru Wallpaper */
+    .bg-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('https://images.alphacoders.com/131/1312385.jpeg') center/cover no-repeat;
+      filter: brightness(0.4) opacity(0.85);
+      z-index: 1;
     }
 
-    15% {
-        opacity: .5;
+    /* Main Container Card */
+    .profile-card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 440px;
+      margin: 20px;
+      background: rgba(20, 20, 28, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      padding-bottom: 24px;
     }
 
-    85% {
-        opacity: .5;
+    /* Banner Top */
+    .banner-container {
+      position: relative;
+      width: 100%;
+      height: 140px;
+      background: url('https://w0.peakpx.com/wallpaper/702/692/HD-wallpaper-gojo-satoru-jujutsu-kaisen.jpg') center/cover no-repeat;
     }
 
-    to {
-        transform: translateY(-10vh);
-        opacity: 0;
-    }
-}
-
-/* ================= MOBILE ================= */
-
-@media (max-width: 480px) {
-
-    .page {
-        padding: 20px 13px;
+    .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(20,20,28,0.8) 100%);
     }
 
-    .profile {
-        padding: 29px 18px 22px;
-        border-radius: 25px;
+    /* Avatar Circle */
+    .avatar-wrapper {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      margin: -45px auto 12px;
     }
 
-    .profile::after {
-        border-radius: 24px;
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     }
 
-    .name {
-        font-size: 26px;
+    .status-badge {
+      position: absolute;
+      top: 0;
+      right: 2px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      font-size: 11px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.3);
     }
 
-    .bio {
-        font-size: 12px;
+    /* Main Name & Badges */
+    .title-name {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 6px;
     }
-}
-</style>
+
+    .tags-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      color: #ccc;
+    }
+
+    .japanese-sub {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 20px;
+    }
+
+    /* Inner Glass Card (KORNN Section) */
+    .inner-card {
+      width: calc(100% - 32px);
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.88);
+      color: #111;
+      border-radius: 16px;
+      padding: 16px 20px;
+      text-align: left;
+      position: relative;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .inner-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .inner-icon {
+      width: 36px;
+      height: 36px;
+      background: #111;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .inner-title-group h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #000;
+      letter-spacing: 0.5px;
+    }
+
+    .inner-stats {
+      font-size: 10px;
+      font-weight: 700;
+      color: #666;
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .inner-about {
+      font-size: 11px;
+      color: #777;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+      font-weight: 600;
+    }
+
+    .inner-bio {
+      font-size: 13px;
+      font-weight: 700;
+      color: #222;
+      margin-bottom: 10px;
+    }
+
+    .inner-footer {
+      font-size: 10px;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Media Play Button Overlay Effect */
+    .play-btn-overlay {
+      position: absolute;
+      right: 25px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(4px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    /* Scroll Indicator Below */
+    .scroll-indicator {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 10px;
+      letter-spacing: 2px;
+      font-weight: 700;
+    }
+
+    .scroll-indicator i {
+      font-size: 12px;
+      animation: bounce 1.5s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="background"></div>
+  <div class="bg-overlay"></div>
 
-<div class="light one"></div>
-<div class="light two"></div>
+  <div class="profile-card">
+    <!-- Header Banner -->
+    <div class="banner-container">
+      <div class="banner-overlay"></div>
+    </div>
 
-<!-- particles -->
-<div class="particle" style="left:8%;animation-duration:9s"></div>
-<div class="particle" style="left:17%;animation-duration:12s;animation-delay:2s"></div>
-<div class="particle" style="left:29%;animation-duration:8s;animation-delay:4s"></div>
-<div class="particle" style="left:43%;animation-duration:11s;animation-delay:1s"></div>
-<div class="particle" style="left:58%;animation-duration:9s;animation-delay:3s"></div>
-<div class="particle" style="left:72%;animation-duration:13s"></div>
-<div class="particle" style="left:88%;animation-duration:10s;animation-delay:2s"></div>
+    <!-- Avatar -->
+    <div class="avatar-wrapper">
+      <img src="https://i.pinimg.com/736x/21/d0/09/21d0092c483a9366d0344b1c1c7a23c3.jpg" alt="Avatar Gojo" class="avatar-img">
+      <div class="status-badge">?</div>
+    </div>
 
-<main class="page">
+    <!-- Header Info -->
+    <h1 class="title-name">DOKIDOKI</h1>
+    
+    <div class="tags-wrapper">
+      <span class="tag"><i class="fa-solid fa-user-group"></i> REASONS</span>
+      <span class="tag"><i class="fa-solid fa-shield-halved"></i> FUSIONS</span>
+      <span class="tag"># るまん</span>
+    </div>
 
-    <section class="profile">
+    <p class="japanese-sub">明日に会えることが難しい</p>
 
-        <!-- Avatar -->
-        <div class="avatar-wrap">
-            <div class="avatar-ring">
-                <img
-                    class="avatar"
-                    src="https://i.imgur.com/8Km9tLL.jpeg"
-                    alt="Avatar"
-                >
-            </div>
+    <!-- Inner Card (KORNN) -->
+    <div class="inner-card">
+      <div class="inner-header">
+        <div class="inner-icon">
+          <i class="fa-solid fa-mug-hot"></i>
         </div>
-
-        <!-- Name -->
-        <h1 class="name">HARBLX</h1>
-
-        <div class="username">
-            @harblx
+        <div class="inner-title-group">
+          <h3>KORNN</h3>
+          <div class="inner-stats">
+            <i class="fa-solid fa-user-friends"></i> 100 FRIENDS &nbsp;»&nbsp; 11 FOLLOWERS
+          </div>
         </div>
+      </div>
 
-        <!-- Status -->
-        <div class="status">
-            <span class="status-dot"></span>
-            Online
-        </div>
+      <div class="inner-about">ABOUT</div>
+      <div class="inner-bio">HAHA</div>
 
-        <!-- Bio -->
-        <p class="bio">
-            Developer • Designer • Gamer<br>
-            Building things that look good & work better.
-        </p>
+      <div class="inner-footer">
+        <i class="fa-regular fa-clock"></i> JOINED 4 YEARS AGO
+      </div>
 
-        <!-- Stats -->
-        <div class="stats">
+      <!-- Play Button Effect -->
+      <div class="play-btn-overlay">
+        <i class="fa-solid fa-play" style="margin-left: 2px;"></i>
+      </div>
+    </div>
 
-            <div class="stat">
-                <strong>24</strong>
-                <span>PROJECTS</span>
-            </div>
-
-            <div class="stat">
-                <strong>8.4K</strong>
-                <span>VIEWS</span>
-            </div>
-
-            <div class="stat">
-                <strong>2026</strong>
-                <span>JOINED</span>
-            </div>
-
-        </div>
-
-        <!-- Links -->
-        <div class="links">
-
-            <a class="link" href="#" target="_blank">
-                <div class="icon">◈</div>
-
-                <div class="link-info">
-                    <span class="link-title">Discord</span>
-                    <span class="link-sub">Join my community</span>
-                </div>
-
-                <div class="arrow">›</div>
-            </a>
-
-            <a class="link" href="#" target="_blank">
-                <div class="icon">⌘</div>
-
-                <div class="link-info">
-                    <span class="link-title">GitHub</span>
-                    <span class="link-sub">My projects & source code</span>
-                </div>
-
-                <div class="arrow">›</div>
-            </a>
-
-            <a class="link" href="#" target="_blank">
-                <div class="icon">♪</div>
-
-                <div class="link-info">
-                    <span class="link-title">TikTok</span>
-                    <span class="link-sub">@harblx</span>
-                </div>
-
-                <div class="arrow">›</div>
-            </a>
-
-            <a class="link" href="#" target="_blank">
-                <div class="icon">✦</div>
-
-                <div class="link-info">
-                    <span class="link-title">Website</span>
-                    <span class="link-sub">harblx.site</span>
-                </div>
-
-                <div class="arrow">›</div>
-            </a>
-
-        </div>
-
-        <div class="footer">
-            Made with <span>♥</span> by HARBLX
-        </div>
-
-    </section>
-
-</main>
+    <!-- Scroll Footer -->
+    <div class="scroll-indicator">
+      <i class="fa-solid fa-chart-simple"></i>
+      <span>SCROLL</span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+  </div>
 
 </body>
 </html>
