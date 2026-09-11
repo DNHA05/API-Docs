@@ -16,12 +16,12 @@
       box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7); text-align: center; padding-bottom: 24px;
     }
 
-    /* ĐÃ TĂNG CHIỀU CAO BANNER LÊN 220PX ĐỂ HIỂN THỊ TO TOÀN BỘ HỌA TIẾT */
+    /* CHỈNH TỶ LỆ KHUNG BANNER CHUẨN ĐỂ CHỨA NGUYÊN BẢN HÌNH ẢNH BANNER */
     .banner-container {
-      position: relative; width: 100%; height: 220px;
-      background: url('https://i.ibb.co/xKYtnm2V/IMG-4277.jpg') center center / cover no-repeat;
+      position: relative; width: 100%; height: 140px;
+      background: url('https://i.ibb.co/xKYtnm2V/IMG-4277.jpg') center center / contain no-repeat #0d0e12;
     }
-    .banner-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(18,19,26,0.95) 100%); }
+    .banner-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(18,19,26,0.95) 100%); }
 
     /* AVATAR DECORATION FIT */
     .avatar-wrapper {
