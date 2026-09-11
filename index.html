@@ -16,12 +16,12 @@
       box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7); text-align: center; padding-bottom: 24px;
     }
 
-    /* BANNER GIF ĐỘNG MỚI - PHỦ KÍN VÀ GIỮ CHUẨN TỶ LỆ */
+    /* BANNER */
     .banner-container {
       position: relative; 
       width: 100%; 
       aspect-ratio: 720 / 265;
-      background: url('https://i.ibb.co/d4nc1sSh/C16-FE59-C-56-AD-4-E53-B9-CB-43-C5140-CA410.gif') center/cover no-repeat;
+      background: url('./banner.gif') center/cover no-repeat #12131a;
     }
     .banner-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(18,19,26,0.95) 100%); }
 
@@ -65,11 +65,42 @@
       background: rgba(0, 0, 0, 0.25); padding: 4px 10px; border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 12px; min-height: 26px;
     }
-    .badge-icon { width: 18px; height: 18px; object-fit: contain; }
 
     .tags-wrapper { display: flex; justify-content: center; align-items: center; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
     .tag { font-size: 11px; font-weight: 600; padding: 4px 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 20px; color: #d1d5db; display: flex; align-items: center; gap: 5px; }
-    .japanese-sub { font-size: 12px; color: rgba(255, 255, 255, 0.55); margin-bottom: 20px; letter-spacing: 0.5px; }
+    .japanese-sub { font-size: 12px; color: rgba(255, 255, 255, 0.55); margin-bottom: 14px; letter-spacing: 0.5px; }
+
+    /* THANH NOW PLAYING */
+    .now-playing-card {
+      width: calc(100% - 32px);
+      margin: 0 auto 14px;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(10px);
+    }
+    .np-left { display: flex; align-items: center; gap: 12px; text-align: left; overflow: hidden; }
+    .np-icon { font-size: 16px; color: #ffffff; flex-shrink: 0; }
+    .np-info { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .np-title { font-size: 13px; font-weight: 700; color: #ffffff; overflow: hidden; text-overflow: ellipsis; }
+    .np-subtitle { font-size: 11px; color: rgba(255, 255, 255, 0.45); margin-top: 1px; font-weight: 500; }
+
+    /* HIỆU ỨNG SÓNG ÂM THANH */
+    .sound-wave { display: flex; align-items: flex-end; gap: 2px; height: 14px; flex-shrink: 0; }
+    .sound-wave span { width: 3px; background-color: #ffffff; border-radius: 2px; animation: bounce 1.2s ease-in-out infinite; }
+    .sound-wave.paused span { animation-play-state: paused; opacity: 0.3; }
+    .sound-wave span:nth-child(1) { height: 60%; animation-delay: 0.1s; }
+    .sound-wave span:nth-child(2) { height: 100%; animation-delay: 0.3s; }
+    .sound-wave span:nth-child(3) { height: 40%; animation-delay: 0.2s; }
+
+    @keyframes bounce {
+      0%, 100% { transform: scaleY(0.4); }
+      50% { transform: scaleY(1); }
+    }
 
     .inner-card {
       width: calc(100% - 32px); margin: 0 auto; background: rgba(240, 242, 245, 0.92); color: #111;
@@ -88,13 +119,18 @@
       background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(8px); border-radius: 50%;
       display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 16px; cursor: pointer;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: all 0.2s ease;
     }
+    .play-btn-overlay:hover { transform: translateY(-50%) scale(1.05); background: rgba(255, 255, 255, 0.85); }
 
     .scroll-indicator { margin-top: 22px; display: flex; flex-direction: column; align-items: center; gap: 5px; color: rgba(255, 255, 255, 0.45); font-size: 9px; letter-spacing: 2px; font-weight: 800; }
     .scroll-indicator i { font-size: 11px; }
   </style>
 </head>
 <body>
+
+  <!-- FILE NHẠC: Thay 'music.mp3' bằng đường dẫn/tệp nhạc của bạn -->
+  <audio id="audio-player" src="./music.mp3" loop></audio>
 
   <div class="profile-card">
     <div class="banner-container">
@@ -124,6 +160,22 @@
 
     <p class="japanese-sub">明日に会えることが難しい</p>
 
+    <!-- THANH NOW PLAYING -->
+    <div class="now-playing-card">
+      <div class="np-left">
+        <i class="fa-solid fa-music np-icon"></i>
+        <div class="np-info">
+          <div id="np-song" class="np-title">Fusions — Dragon Ball</div>
+          <div id="np-status" class="np-subtitle">Paused</div>
+        </div>
+      </div>
+      <div id="wave-box" class="sound-wave paused">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
     <div class="inner-card">
       <div class="inner-header">
         <div class="inner-icon"><i class="fa-solid fa-mug-hot"></i></div>
@@ -138,8 +190,9 @@
 
       <div class="inner-footer"><i class="fa-regular fa-clock"></i> JOINED 4 YEARS AGO</div>
 
-      <div class="play-btn-overlay">
-        <i class="fa-solid fa-play" style="margin-left: 2px; color: rgba(255,255,255,0.9);"></i>
+      <!-- NÚT BẤM BẬT/TẮT NHẠC -->
+      <div id="play-btn" class="play-btn-overlay">
+        <i id="play-icon" class="fa-solid fa-play" style="margin-left: 2px; color: rgba(255,255,255,0.9);"></i>
       </div>
     </div>
 
@@ -153,12 +206,35 @@
   <script>
     const DISCORD_USER_ID = "862273858214821929"; 
 
+    // BỘ PHÁT NHẠC
+    const audio = document.getElementById('audio-player');
+    const playBtn = document.getElementById('play-btn');
+    const playIcon = document.getElementById('play-icon');
+    const waveBox = document.getElementById('wave-box');
+    const npStatus = document.getElementById('np-status');
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playIcon.className = "fa-solid fa-pause";
+        playIcon.style.marginLeft = "0px";
+        waveBox.classList.remove('paused');
+        npStatus.innerText = "Now playing";
+      } else {
+        audio.pause();
+        playIcon.className = "fa-solid fa-play";
+        playIcon.style.marginLeft = "2px";
+        waveBox.classList.add('paused');
+        npStatus.innerText = "Paused";
+      }
+    });
+
+    // LẠY DỮ LIỆU DISCORD
     async function updateDiscordData() {
       const nameElem = document.getElementById('discord-username');
       const avatarElem = document.getElementById('discord-avatar');
       const statusDot = document.getElementById('status-dot');
       const decoElem = document.getElementById('avatar-deco');
-      const badgesBox = document.getElementById('badges-box');
       const guildTagElem = document.getElementById('guild-tag');
       const guildNameElem = document.getElementById('guild-name');
 
