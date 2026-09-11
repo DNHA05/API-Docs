@@ -16,7 +16,7 @@
       box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7); text-align: center; padding-bottom: 24px;
     }
 
-    /* BANNER */
+    /* BANNER CONTAINER */
     .banner-container {
       position: relative; 
       width: 100%; 
@@ -89,6 +89,10 @@
     .np-title { font-size: 13px; font-weight: 700; color: #ffffff; overflow: hidden; text-overflow: ellipsis; }
     .np-subtitle { font-size: 11px; color: rgba(255, 255, 255, 0.45); margin-top: 1px; font-weight: 500; }
 
+    .np-controls { display: flex; align-items: center; gap: 10px; }
+    .next-btn { color: rgba(255, 255, 255, 0.6); cursor: pointer; font-size: 14px; transition: color 0.2s; }
+    .next-btn:hover { color: #ffffff; }
+
     /* HIỆU ỨNG SÓNG ÂM THANH */
     .sound-wave { display: flex; align-items: flex-end; gap: 2px; height: 14px; flex-shrink: 0; }
     .sound-wave span { width: 3px; background-color: #ffffff; border-radius: 2px; animation: bounce 1.2s ease-in-out infinite; }
@@ -129,8 +133,8 @@
 </head>
 <body>
 
-  <!-- FILE NHẠC: Thay 'music.mp3' bằng đường dẫn/tệp nhạc của bạn -->
-  <audio id="audio-player" src="./music.mp3" loop></audio>
+  <!-- THẺ AUDIO DÙNG CHUNG -->
+  <audio id="audio-player"></audio>
 
   <div class="profile-card">
     <div class="banner-container">
@@ -165,14 +169,17 @@
       <div class="np-left">
         <i class="fa-solid fa-music np-icon"></i>
         <div class="np-info">
-          <div id="np-song" class="np-title">Fusions — Dragon Ball</div>
+          <div id="np-song" class="np-title">Loading...</div>
           <div id="np-status" class="np-subtitle">Paused</div>
         </div>
       </div>
-      <div id="wave-box" class="sound-wave paused">
-        <span></span>
-        <span></span>
-        <span></span>
+      <div class="np-controls">
+        <div id="next-btn" class="next-btn" title="Bài tiếp theo"><i class="fa-solid fa-forward-step"></i></div>
+        <div id="wave-box" class="sound-wave paused">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </div>
 
@@ -190,7 +197,7 @@
 
       <div class="inner-footer"><i class="fa-regular fa-clock"></i> JOINED 4 YEARS AGO</div>
 
-      <!-- NÚT BẤM BẬT/TẮT NHẠC -->
+      <!-- NÚT PLAY/PAUSE -->
       <div id="play-btn" class="play-btn-overlay">
         <i id="play-icon" class="fa-solid fa-play" style="margin-left: 2px; color: rgba(255,255,255,0.9);"></i>
       </div>
@@ -206,30 +213,67 @@
   <script>
     const DISCORD_USER_ID = "862273858214821929"; 
 
-    // BỘ PHÁT NHẠC
+    // DANH SÁCH BÀI HÁT TỪ CÁC THƯ MỤC KHÁC NHAU
+    const playlist = [
+      { title: "Fusions — Dragon Ball", src: "./audio/track1.mp3" },
+      { title: "Song 2 — Custom Folder", src: "./music/song2.mp3" }
+    ];
+
+    let currentTrack = 0;
     const audio = document.getElementById('audio-player');
     const playBtn = document.getElementById('play-btn');
+    const nextBtn = document.getElementById('next-btn');
     const playIcon = document.getElementById('play-icon');
     const waveBox = document.getElementById('wave-box');
+    const npSong = document.getElementById('np-song');
     const npStatus = document.getElementById('np-status');
 
-    playBtn.addEventListener('click', () => {
-      if (audio.paused) {
-        audio.play();
+    function loadTrack(index) {
+      audio.src = playlist[index].src;
+      npSong.innerText = playlist[index].title;
+    }
+
+    function playAudio() {
+      audio.play().then(() => {
         playIcon.className = "fa-solid fa-pause";
         playIcon.style.marginLeft = "0px";
         waveBox.classList.remove('paused');
         npStatus.innerText = "Now playing";
+      }).catch(err => console.log("Cần tương tác người dùng để phát nhạc:", err));
+    }
+
+    function pauseAudio() {
+      audio.pause();
+      playIcon.className = "fa-solid fa-play";
+      playIcon.style.marginLeft = "2px";
+      waveBox.classList.add('paused');
+      npStatus.innerText = "Paused";
+    }
+
+    // Load bài hát đầu tiên
+    loadTrack(currentTrack);
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        playAudio();
       } else {
-        audio.pause();
-        playIcon.className = "fa-solid fa-play";
-        playIcon.style.marginLeft = "2px";
-        waveBox.classList.add('paused');
-        npStatus.innerText = "Paused";
+        pauseAudio();
       }
     });
 
-    // LẠY DỮ LIỆU DISCORD
+    nextBtn.addEventListener('click', () => {
+      currentTrack = (currentTrack + 1) % playlist.length;
+      loadTrack(currentTrack);
+      playAudio();
+    });
+
+    audio.addEventListener('ended', () => {
+      currentTrack = (currentTrack + 1) % playlist.length;
+      loadTrack(currentTrack);
+      playAudio();
+    });
+
+    // LẤY DỮ LIỆU TỪ DISCORD LANYARD API
     async function updateDiscordData() {
       const nameElem = document.getElementById('discord-username');
       const avatarElem = document.getElementById('discord-avatar');
