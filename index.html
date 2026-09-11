@@ -17,10 +17,13 @@
     }
 
     /* CHỈNH TỶ LỆ KHUNG BANNER CHUẨN ĐỂ CHỨA NGUYÊN BẢN HÌNH ẢNH BANNER */
-    .banner-container {
-      position: relative; width: 100%; height: 140px;
-      background: url('https://i.ibb.co/xKYtnm2V/IMG-4277.jpg') center center / contain no-repeat #0d0e12;
+        .banner-container {
+      position: relative; 
+      width: 100%; 
+      aspect-ratio: 720 / 265; /* Tỷ lệ chuẩn theo kích thước ảnh gốc */
+      background: url('https://i.ibb.co/xKYtnm2V/IMG-4277.jpg') center/cover no-repeat;
     }
+
     .banner-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(18,19,26,0.95) 100%); }
 
     /* AVATAR DECORATION FIT */
